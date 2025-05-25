@@ -1,41 +1,236 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Zaloguj przez Discord</title>
-  <style>
-    body {
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-      background-color: #2c2f33;
-      margin: 0;
-    }
-    button {
-      background-color: #7289da;
-      border: none;
-      color: white;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #5b6eae;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Klienta</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#4A9EFF',secondary:'#1e293b'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            background-color: #121218;
+            background-image: radial-gradient(circle at 10% 20%, rgba(74, 158, 255, 0.03) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 30%, rgba(74, 158, 255, 0.03) 0%, transparent 20%),
+                              radial-gradient(circle at 50% 50%, rgba(74, 158, 255, 0.03) 0%, transparent 30%),
+                              radial-gradient(circle at 20% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 20%),
+                              radial-gradient(circle at 80% 90%, rgba(74, 158, 255, 0.03) 0%, transparent 20%);
+        }
+        .sidebar {
+            background-color: rgba(18, 18, 24, 0.8);
+            border-right: 1px solid rgba(74, 158, 255, 0.1);
+        }
+        .main-content {
+            background-color: rgba(30, 30, 40, 0.4);
+            border: 1px solid rgba(74, 158, 255, 0.1);
+        }
+        input {
+            background-color: rgba(18, 18, 24, 0.8);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+        }
+        input:focus {
+            border-color: #4A9EFF;
+            outline: none;
+        }
+        .cookie-banner {
+            background-color: rgba(18, 18, 24, 0.95);
+            border-top: 1px solid rgba(74, 158, 255, 0.2);
+        }
+    </style>
 </head>
-<body>
-  <button id="loginBtn">Zaloguj przez Discord</button>
+<body class="min-h-screen text-gray-200 flex flex-col">
+    <div class="flex flex-1">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 flex-shrink-0 h-screen fixed">
+            <div class="p-4">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex items-center justify-center bg-gray-700">
+                        <img id="user-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <div id="user-name" class="font-medium">zxq0</div>
+                        <div id="user-id" class="text-xs text-gray-400">9714934488:5145:32</div>
+                    </div>
+                </div>
 
-  <script>
-    const oauth2Url = 'https://discord.com/oauth2/authorize?client_id=1375904230895783986&response_type=code&redirect_uri=https%3A%2F%2Fwww.youtube.com&scope=identify+guilds';
+                <div class="mb-8">
+                    <div class="text-xs uppercase text-gray-500 font-semibold mb-4">Opcje podstawowe</div>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-home-line text-gray-400"></i>
+                                </div>
+                                <span>Moje licencje</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-box-line text-gray-400"></i>
+                                </div>
+                                <span>Moje paczki</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-ticket-line text-gray-400"></i>
+                                </div>
+                                <span>Moje tickety</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      window.location.href = oauth2Url;
-    });
-  </script>
+                <div>
+                    <div class="text-xs uppercase text-gray-500 font-semibold mb-4">Nasz sklep</div>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-shopping-cart-line text-gray-400"></i>
+                                </div>
+                                <span>Złóż zamówienie</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 ml-64">
+            <!-- Header -->
+            <header class="h-16 flex items-center justify-end px-8 border-b border-gray-800">
+                <a href="#" id="logout-btn" class="bg-primary text-white px-4 py-2 rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors">
+                    Wyloguj się
+                </a>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="p-8">
+                <div class="max-w-5xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h1 class="text-3xl font-bold text-white mb-2">PANEL LICENCJI</h1>
+                        <p class="text-gray-400">Zalogowano użytkownika: <span class="text-primary">zxq0</span></p>
+                    </div>
+                    <div class="main-content rounded-xl p-8 mb-8">
+                        <div class="text-center mb-6">
+                            <h2 class="text-xl font-bold text-white mb-1">ZAKUPIONE PRODUKTY</h2>
+                            <p class="text-primary">INFORMACJE O AKTYWNYCH USŁUGACH</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <input type="text" placeholder="Wyszukaj po nazwie pluginu" class="w-full px-4 py-3 rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <input type="text" placeholder="Wyszukaj po kluczu" class="w-full px-4 py-3 rounded-lg text-sm">
+                            </div>
+                        </div>
+
+                        <div class="text-center text-sm text-gray-400 mb-8">
+                            Brak licencji spełniających kryteria wyszukiwania.
+                        </div>
+
+                        <div class="text-center">
+                            <p class="text-gray-400 text-sm">Nie widzisz produktu który zamówiłeś? <a href="#" class="text-primary hover:underline">Zgłoś to tutaj!</a></p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner fixed bottom-0 left-0 right-0 p-4 flex justify-between items-center">
+        <p class="text-sm text-gray-300">Ta strona wykorzystuje pliki cookies, korzystając z niej akceptujesz <a href="#" class="text-primary hover:underline">politykę prywatności</a>.</p>
+        <button id="accept-cookies" class="bg-primary text-white px-4 py-2 rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors">AKCEPTUJĘ</button>
+    </div>
+
+    <script id="discord-auth">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funkcja do pobierania parametrów z URL
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+            
+            // Sprawdź czy mamy kod autoryzacyjny z Discord
+            const code = getUrlParameter('code');
+            
+            if (code) {
+                // Tutaj normalnie wykonałbyś zapytanie do serwera, który wymieni kod na token dostępu
+                // i pobierze dane użytkownika z Discord API
+                // Ponieważ jest to przykład front-endowy, symulujemy to zachowanie
+                
+                console.log("Otrzymano kod autoryzacyjny: " + code);
+                
+                // Symulacja danych użytkownika z Discord
+                const mockUserData = {
+                    id: "9714934488:5145:32",
+                    username: "zxq0",
+                    avatar: "https://cdn.discordapp.com/embed/avatars/0.png"
+                };
+                
+                // Aktualizacja UI z danymi użytkownika
+                document.getElementById('user-name').textContent = mockUserData.username;
+                document.getElementById('user-id').textContent = mockUserData.id;
+                document.getElementById('user-avatar').src = mockUserData.avatar;
+                
+                // Zapisanie danych w localStorage (w rzeczywistej aplikacji używałbyś tokenów)
+                localStorage.setItem('discord_user', JSON.stringify(mockUserData));
+                
+                // Usunięcie parametru code z URL bez przeładowania strony
+                const url = new URL(window.location);
+                url.searchParams.delete('code');
+                window.history.pushState({}, '', url);
+            } else {
+                // Sprawdź czy użytkownik jest już zalogowany (w localStorage)
+                const savedUser = localStorage.getItem('discord_user');
+                
+                if (!savedUser) {
+                    // Przekieruj do logowania Discord
+                    window.location.href = "https://discord.com/oauth2/authorize?client_id=1375904230895783986&response_type=code&redirect_uri=https%3A%2F%2Fzxq041.github.io%2Fpanel%2F&scope=identify+guilds";
+                } else {
+                    // Aktualizacja UI z zapisanymi danymi
+                    const userData = JSON.parse(savedUser);
+                    document.getElementById('user-name').textContent = userData.username;
+                    document.getElementById('user-id').textContent = userData.id;
+                    document.getElementById('user-avatar').src = userData.avatar;
+                }
+            }
+        });
+    </script>
+    <script id="ui-interactions">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obsługa wylogowania
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                // Usunięcie danych użytkownika
+                localStorage.removeItem('discord_user');
+                // Przekierowanie na stronę główną
+                window.location.href = 'https://zxq041.github.io/';
+            });
+            
+            // Obsługa banera cookie
+            document.getElementById('accept-cookies').addEventListener('click', function() {
+                document.querySelector('.cookie-banner').style.display = 'none';
+                localStorage.setItem('cookies_accepted', 'true');
+            });
+            
+            // Sprawdź czy użytkownik zaakceptował już cookies
+            if (localStorage.getItem('cookies_accepted') === 'true') {
+                document.querySelector('.cookie-banner').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
