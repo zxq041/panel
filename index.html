@@ -40,9 +40,54 @@
             background-color: rgba(18, 18, 24, 0.95);
             border-top: 1px solid rgba(74, 158, 255, 0.2);
         }
+        .btn-class-name {
+border-radius: 1em;
+transition: .3s;
+background-color: rgba(var(--color), .2);
+color: rgb(var(--color));
+fill: rgb(var(--color));
+font-weight: bold;
+font-size: 1.25rem;
+text-transform: uppercase;
+letter-spacing: 0.1em;
+cursor: pointer;
+border: 2px solid rgb(var(--color));
+box-shadow: 0 0 10px rgba(var(--color), .4);
+padding: 0.75rem 2rem;
+}
+.bar {
+position: relative;
+display: inline-block;
+margin: 0 8px;
+width: 10px;
+height: 50px;
+border-radius: 0px;
+background: #fff;
+box-shadow: 0 4px 10px rgba(47, 47, 47, 0.5);
+animation: wave 1s ease-in-out infinite;
+}
+@keyframes wave {
+0% {
+transform: scaleY(1);
+}
+50% {
+transform: scaleY(0.5);
+}
+100% {
+transform: scaleY(1);
+}
+}
+.btn-class-name:hover {
+box-shadow: 0 0 20px rgba(var(--color), .6);
+transform: translateY(-2px);
+}
     </style>
 </head>
 <body class="min-h-screen text-gray-200 flex flex-col">
+    <a href="index.html" class="btn-class-name py-2 px-6 whitespace-nowrap" style="--color: 52, 152, 219">Wyloguj</a>
+<button class="md:hidden flex items-center justify-center w-10 h-10">
+<i class="ri-menu-line ri-lg"></i>
+</button>
     <div class="flex flex-1">
         <!-- Sidebar -->
         <div class="sidebar w-64 flex-shrink-0 h-screen fixed">
