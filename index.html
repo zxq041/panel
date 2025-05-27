@@ -1,46 +1,338 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Klienta</title>
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>tailwind.config={theme:{extend:{colors:{primary:'#4A9EFF',secondary:'#1e293b'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-    <style>
-        :where([class^="ri-"])::before { content: "\f3c2"; }
-        body {
-            background-color: #121218;
-            background-image: radial-gradient(circle at 10% 20%, rgba(74, 158, 255, 0.03) 0%, transparent 20%),
-                              radial-gradient(circle at 90% 30%, rgba(74, 158, 255, 0.03) 0%, transparent 20%),
-                              radial-gradient(circle at 50% 50%, rgba(74, 158, 255, 0.03) 0%, transparent 30%),
-                              radial-gradient(circle at 20% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 20%),
-                              radial-gradient(circle at 80% 90%, rgba(74, 158, 255, 0.03) 0%, transparent 20%);
-        }
-        .sidebar {
-            background-color: rgba(18, 18, 24, 0.8);
-            border-right: 1px solid rgba(74, 158, 255, 0.1);
-        }
-        .main-content {
-            background-color: rgba(30, 30, 40, 0.4);
-            border: 1px solid rgba(74, 158, 255, 0.1);
-        }
-        input {
-            background-color: rgba(18, 18, 24, 0.8);
-            border: 1px solid rgba(74, 158, 255, 0.2);
-        }
-        input:focus {
-            border-color: #4A9EFF;
-            outline: none;
-        }
-        .cookie-banner {
-            background-color: rgba(18, 18, 24, 0.95);
-            border-top: 1px solid rgba(74, 158, 255, 0.2);
-        }
-        .btn-class-name {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Klienta - LiteCode</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#3B82F6',secondary:'#1E40AF'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+.wrapper {
+width: 200px;
+height: 60px;
+position: relative;
+z-index: 1;
+}
+.circle {
+width: 20px;
+height: 20px;
+position: absolute;
+border-radius: 50%;
+background-color: #fff;
+left: 15%;
+transform-origin: 50%;
+animation: circle7124 .5s alternate infinite ease;
+}
+.circle:nth-child(2) {
+left: 45%;
+animation-delay: .2s;
+}
+.circle:nth-child(3) {
+left: auto;
+right: 15%;
+animation-delay: .3s;
+}
+.shadow {
+width: 20px;
+height: 4px;
+border-radius: 50%;
+background-color: rgba(0,0,0,0.5);
+position: absolute;
+top: 62px;
+transform-origin: 50%;
+z-index: -1;
+left: 15%;
+filter: blur(1px);
+animation: shadow046 .5s alternate infinite ease;
+}
+.shadow:nth-child(4) {
+left: 45%;
+animation-delay: .2s;
+}
+.shadow:nth-child(5) {
+left: auto;
+right: 15%;
+animation-delay: .3s;
+}
+@keyframes circle7124 {
+0% {
+top: 60px;
+height: 5px;
+border-radius: 50px 50px 25px 25px;
+transform: scaleX(1.7);
+}
+40% {
+height: 20px;
+border-radius: 50%;
+transform: scaleX(1);
+}
+100% {
+top: 0%;
+}
+}
+@keyframes shadow046 {
+0% {
+transform: scaleX(1.5);
+}
+40% {
+transform: scaleX(1);
+opacity: .7;
+}
+100% {
+transform: scaleX(.2);
+opacity: .4;
+}
+}
+.wheel-and-hamster {
+--dur: 1s;
+position: relative;
+width: 12em;
+height: 12em;
+font-size: 14px;
+}
+.wheel,
+.hamster,
+.hamster div,
+.spoke {
+position: absolute;
+}
+.wheel,
+.spoke {
+border-radius: 50%;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+.wheel {
+background: radial-gradient(100% 100% at center,hsla(0,0%,60%,0) 47.8%,hsl(0,0%,60%) 48%);
+z-index: 2;
+}
+.hamster {
+animation: hamster var(--dur) ease-in-out infinite;
+top: 50%;
+left: calc(50% - 3.5em);
+width: 7em;
+height: 3.75em;
+transform: rotate(4deg) translate(-0.8em,1.85em);
+transform-origin: 50% 0;
+z-index: 1;
+}
+.hamster__head {
+animation: hamsterHead var(--dur) ease-in-out infinite;
+background: hsl(30,90%,55%);
+border-radius: 70% 30% 0 100% / 40% 25% 25% 60%;
+box-shadow: 0 -0.25em 0 hsl(30,90%,80%) inset,
+0.75em -1.55em 0 hsl(30,90%,90%) inset;
+top: 0;
+left: -2em;
+width: 2.75em;
+height: 2.5em;
+transform-origin: 100% 50%;
+}
+.hamster__ear {
+animation: hamsterEar var(--dur) ease-in-out infinite;
+background: hsl(0,90%,85%);
+border-radius: 50%;
+box-shadow: -0.25em 0 hsl(30,90%,55%) inset;
+top: -0.25em;
+right: -0.25em;
+width: 0.75em;
+height: 0.75em;
+transform-origin: 50% 75%;
+}
+.hamster__eye {
+animation: hamsterEye var(--dur) linear infinite;
+background-color: hsl(0,0%,0%);
+border-radius: 50%;
+top: 0.375em;
+left: 1.25em;
+width: 0.5em;
+height: 0.5em;
+}
+.hamster__nose {
+background: hsl(0,90%,75%);
+border-radius: 35% 65% 85% 15% / 70% 50% 50% 30%;
+top: 0.75em;
+left: 0;
+width: 0.2em;
+height: 0.25em;
+}
+.hamster__body {
+animation: hamsterBody var(--dur) ease-in-out infinite;
+background: hsl(30,90%,90%);
+border-radius: 50% 30% 50% 30% / 15% 60% 40% 40%;
+box-shadow: 0.1em 0.75em 0 hsl(30,90%,55%) inset,
+0.15em -0.5em 0 hsl(30,90%,80%) inset;
+top: 0.25em;
+left: 2em;
+width: 4.5em;
+height: 3em;
+transform-origin: 17% 50%;
+transform-style: preserve-3d;
+}
+.hamster__limb--fr,
+.hamster__limb--fl {
+clip-path: polygon(0 0,100% 0,70% 80%,60% 100%,0% 100%,40% 80%);
+top: 2em;
+left: 0.5em;
+width: 1em;
+height: 1.5em;
+transform-origin: 50% 0;
+}
+.hamster__limb--fr {
+animation: hamsterFRLimb var(--dur) linear infinite;
+background: linear-gradient(hsl(30,90%,80%) 80%,hsl(0,90%,75%) 80%);
+transform: rotate(15deg) translateZ(-1px);
+}
+.hamster__limb--fl {
+animation: hamsterFLLimb var(--dur) linear infinite;
+background: linear-gradient(hsl(30,90%,90%) 80%,hsl(0,90%,85%) 80%);
+transform: rotate(15deg);
+}
+.hamster__limb--br,
+.hamster__limb--bl {
+border-radius: 0.75em 0.75em 0 0;
+clip-path: polygon(0 0,100% 0,100% 30%,70% 90%,70% 100%,30% 100%,40% 90%,0% 30%);
+top: 1em;
+left: 2.8em;
+width: 1.5em;
+height: 2.5em;
+transform-origin: 50% 30%;
+}
+.hamster__limb--br {
+animation: hamsterBRLimb var(--dur) linear infinite;
+background: linear-gradient(hsl(30,90%,80%) 90%,hsl(0,90%,75%) 90%);
+transform: rotate(-25deg) translateZ(-1px);
+}
+.hamster__limb--bl {
+animation: hamsterBLLimb var(--dur) linear infinite;
+background: linear-gradient(hsl(30,90%,90%) 90%,hsl(0,90%,85%) 90%);
+transform: rotate(-25deg);
+}
+.hamster__tail {
+animation: hamsterTail var(--dur) linear infinite;
+background: hsl(0,90%,85%);
+border-radius: 0.25em 50% 50% 0.25em;
+box-shadow: 0 -0.2em 0 hsl(0,90%,75%) inset;
+top: 1.5em;
+right: -0.5em;
+width: 1em;
+height: 0.5em;
+transform: rotate(30deg) translateZ(-1px);
+transform-origin: 0.25em 0.25em;
+}
+.spoke {
+animation: spoke var(--dur) linear infinite;
+background: radial-gradient(100% 100% at center,hsl(0,0%,60%) 4.8%,hsla(0,0%,60%,0) 5%),
+linear-gradient(hsla(0,0%,55%,0) 46.9%,hsl(0,0%,65%) 47% 52.9%,hsla(0,0%,65%,0) 53%) 50% 50% / 99% 99% no-repeat;
+}
+@keyframes hamster {
+from, to {
+transform: rotate(4deg) translate(-0.8em,1.85em);
+}
+50% {
+transform: rotate(0) translate(-0.8em,1.85em);
+}
+}
+@keyframes hamsterHead {
+from, 25%, 50%, 75%, to {
+transform: rotate(0);
+}
+12.5%, 37.5%, 62.5%, 87.5% {
+transform: rotate(8deg);
+}
+}
+@keyframes hamsterEye {
+from, 90%, to {
+transform: scaleY(1);
+}
+95% {
+transform: scaleY(0);
+}
+}
+@keyframes hamsterEar {
+from, 25%, 50%, 75%, to {
+transform: rotate(0);
+}
+12.5%, 37.5%, 62.5%, 87.5% {
+transform: rotate(12deg);
+}
+}
+@keyframes hamsterBody {
+from, 25%, 50%, 75%, to {
+transform: rotate(0);
+}
+12.5%, 37.5%, 62.5%, 87.5% {
+transform: rotate(-2deg);
+}
+}
+@keyframes hamsterFRLimb {
+from, 25%, 50%, 75%, to {
+transform: rotate(15deg) translateZ(-1px);
+}
+12.5%, 37.5%, 62.5%, 87.5% {
+transform: rotate(50deg) translateZ(-1px);
+}
+}
+@keyframes hamsterFLLimb {
+from, 25%, 50%, 75%, to {
+transform: rotate(15deg);
+}
+12.5%, 37.5%, 62.5%, 87.5% {
+transform: rotate(50deg);
+}
+}
+@keyframes hamsterBRLimb {
+from, 25%, 50%, 75%, to {
+transform: rotate(-25deg) translateZ(-1px);
+}
+12.5%, 37.5%, 62.5%, 87.5% {
+transform: rotate(-60deg) translateZ(-1px);
+}
+}
+@keyframes hamsterBLLimb {
+from, 25%, 50%, 75%, to {
+transform: rotate(-25deg);
+}
+12.5%, 37.5%, 62.5%, 87.5% {
+transform: rotate(-60deg);
+}
+}
+@keyframes hamsterTail {
+from, 25%, 50%, 75%, to {
+transform: rotate(30deg) translateZ(-1px);
+}
+12.5%, 37.5%, 62.5%, 87.5% {
+transform: rotate(45deg) translateZ(-1px);
+}
+}
+@keyframes spoke {
+from {
+transform: rotate(0);
+}
+to {
+transform: rotate(-1turn);
+}
+}
+#loading-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: #0a0a1a;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+}
+.btn-logout {
+--color: 59, 130, 246;
 border-radius: 1em;
 transition: .3s;
 background-color: rgba(var(--color), .2);
@@ -55,227 +347,579 @@ border: 2px solid rgb(var(--color));
 box-shadow: 0 0 10px rgba(var(--color), .4);
 padding: 0.75rem 2rem;
 }
-.bar {
-position: relative;
-display: inline-block;
-margin: 0 8px;
-width: 10px;
-height: 50px;
-border-radius: 0px;
-background: #fff;
-box-shadow: 0 4px 10px rgba(47, 47, 47, 0.5);
-animation: wave 1s ease-in-out infinite;
+.btn-logout:hover {
+background-color: rgb(var(--color));
+color: white;
 }
-@keyframes wave {
-0% {
-transform: scaleY(1);
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+background-color: #0a0a1a;
+background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+background-size: 50px 50px;
+font-family: 'Inter', sans-serif;
 }
-50% {
-transform: scaleY(0.5);
+.star {
+position: absolute;
+background-color: #ffffff;
+border-radius: 50%;
+opacity: 0.4;
+animation: twinkle 4s infinite;
 }
-100% {
-transform: scaleY(1);
+@keyframes twinkle {
+0% { opacity: 0.2; }
+50% { opacity: 0.7; }
+100% { opacity: 0.2; }
 }
+.sidebar-item {
+transition: all 0.3s ease;
 }
-.btn-class-name:hover {
-box-shadow: 0 0 20px rgba(var(--color), .6);
-transform: translateY(-2px);
+.sidebar-item:hover {
+background-color: rgba(59, 130, 246, 0.2);
+transform: translateX(5px);
 }
-    </style>
+.panel-content {
+min-height: 400px;
+}
+input:focus {
+outline: none;
+border-color: #3B82F6;
+box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+</style>
 </head>
-<body class="min-h-screen text-gray-200 flex flex-col">
-    <a href="index.html" class="btn-class-name py-2 px-6 whitespace-nowrap" style="--color: 52, 152, 219">Wyloguj</a>
-<button class="md:hidden flex items-center justify-center w-10 h-10">
-<i class="ri-menu-line ri-lg"></i>
+<body class="min-h-screen text-white opacity-0">
+<div class="geometric-bg">
+<div class="geometric-shape shape-1"></div>
+<div class="geometric-shape shape-2"></div>
+<div class="geometric-shape shape-3"></div>
+<div class="gradient-orb orb-1"></div>
+<div class="gradient-orb orb-2"></div>
+</div>
+<div id="loading-overlay">
+<div class="wheel-and-hamster" aria-label="Orange and tan hamster running in a metal wheel">
+<div class="wheel"></div>
+<div class="hamster">
+<div class="hamster__body">
+<div class="hamster__head">
+<div class="hamster__ear"></div>
+<div class="hamster__eye"></div>
+<div class="hamster__nose"></div>
+</div>
+<div class="hamster__limb hamster__limb--fr"></div>
+<div class="hamster__limb hamster__limb--fl"></div>
+<div class="hamster__limb hamster__limb--br"></div>
+<div class="hamster__limb hamster__limb--bl"></div>
+<div class="hamster__tail"></div>
+</div>
+</div>
+<div class="spoke"></div>
+</div>
+</div>
+<!-- Stars Background -->
+<div id="stars-container"></div>
+<!-- Header -->
+<header class="w-full py-4 px-6 flex justify-between items-center border-b border-gray-800">
+<div class="flex items-center">
+<img src="https://i.imgur.com/XVoGvZE.png" alt="LiteCode Logo" class="h-10 mr-4">
+<span class="text-xl font-bold">LiteCode</span>
+</div>
+<div class="flex items-center">
+<div class="flex items-center mr-6">
+<div class="w-10 h-10 rounded-full bg-gray-700 overflow-hidden mr-3 flex items-center justify-center">
+<img id="user-avatar" src="" alt="Avatar" class="w-full h-full object-cover">
+</div>
+<div>
+<p id="user-name" class="font-medium">Ładowanie...</p>
+<p id="discord-id" class="text-xs text-gray-400">Discord ID: Ładowanie...</p>
+</div>
+</div>
+<a href="#" class="btn-logout whitespace-nowrap">Wyloguj</a>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-80px)]">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-gray-800 p-4">
+<nav>
+<ul class="space-y-2">
+<li>
+<button class="sidebar-item w-full text-left px-4 py-3 rounded flex items-center text-gray-300 hover:text-white" data-panel="orders">
+<div class="w-5 h-5 mr-3 flex items-center justify-center">
+<i class="ri-shopping-bag-line"></i>
+</div>
+Twoje zamówienia
 </button>
-    <div class="flex flex-1">
-        <!-- Sidebar -->
-        <div class="sidebar w-64 flex-shrink-0 h-screen fixed">
-            <div class="p-4">
-                <div class="flex items-center mb-6">
-                    <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex items-center justify-center bg-gray-700">
-                        <img id="user-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="w-full h-full object-cover">
-                    </div>
-                    <div>
-                        <div id="user-name" class="font-medium">zxq0</div>
-                        <div id="user-id" class="text-xs text-gray-400">9714934488:5145:32</div>
-                    </div>
-                </div>
+</li>
+<li>
+<button class="sidebar-item w-full text-left px-4 py-3 rounded flex items-center text-gray-300 hover:text-white" data-panel="licenses">
+<div class="w-5 h-5 mr-3 flex items-center justify-center">
+<i class="ri-key-line"></i>
+</div>
+Twoje Licencje
+</button>
+</li>
+<li>
+<button class="sidebar-item w-full text-left px-4 py-3 rounded flex items-center text-gray-300 hover:text-white" data-panel="promotions">
+<div class="w-5 h-5 mr-3 flex items-center justify-center">
+<i class="ri-coupon-line"></i>
+</div>
+Twoje Promocje
+</button>
+</li>
+<li>
+<a href="https://discord.gg/litecode" target="_blank" class="sidebar-item w-full text-left px-4 py-3 rounded flex items-center text-gray-300 hover:text-white">
+<div class="w-5 h-5 mr-3 flex items-center justify-center">
+<i class="ri-customer-service-line"></i>
+</div>
+Wsparcie
+</a>
+</li>
+<li>
+<button class="sidebar-item w-full text-left px-4 py-3 rounded flex items-center text-gray-300 hover:text-white" id="admin-panel-btn">
+<div class="w-5 h-5 mr-3 flex items-center justify-center">
+<i class="ri-admin-line"></i>
+</div>
+Panel administratora
+</button>
+</li>
+</ul>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-8">
+<div class="max-w-4xl mx-auto text-center">
+<div class="wrapper mx-auto mb-8">
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="shadow"></div>
+<div class="shadow"></div>
+<div class="shadow"></div>
+</div>
+<h1 class="text-3xl font-bold mb-2">Panel Klienta</h1>
+<p class="text-gray-400 mb-8">Jesteś zalogowany jako: <span id="logged-user-name">Ładowanie...</span></p>
+<!-- Dynamic Content Area -->
+<div class="panel-content bg-gray-900 bg-opacity-70 rounded-lg p-6">
+<!-- Orders Panel (default) -->
+<div id="orders-panel" class="panel">
+<h2 class="text-xl font-semibold mb-6">Lista zrealizowanych zamówień</h2>
+<div id="orders-list" class="space-y-4">
+<div class="flex flex-col items-center justify-center py-12 text-gray-400">
+<div class="w-16 h-16 mb-4 flex items-center justify-center">
+<i class="ri-shopping-bag-line text-4xl"></i>
+</div>
+<p class="text-lg">Nie masz jeszcze żadnych zamówień</p>
+</div>
+</div>
+</div>
+<!-- Licenses Panel -->
+<div id="licenses-panel" class="panel hidden">
+<h2 class="text-xl font-semibold mb-6">Twoje aktywne licencje</h2>
+<div id="licenses-list" class="space-y-4">
+<div class="flex flex-col items-center justify-center py-12 text-gray-400">
+<div class="w-16 h-16 mb-4 flex items-center justify-center">
+<i class="ri-key-line text-4xl"></i>
+</div>
+<p class="text-lg">Nie masz jeszcze żadnych licencji</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Promotions Modal -->
+<div id="promotions-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+<div class="bg-gray-900 rounded-xl p-6 max-w-md w-full border border-gray-700 relative">
+<button id="close-promotions" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+<h2 class="text-xl font-semibold mb-4">Twoje Promocje</h2>
+<div class="relative overflow-hidden bg-gradient-to-br from-blue-900 to-primary bg-opacity-30 p-8 rounded-xl border border-blue-800 shadow-lg">
+<div class="absolute top-0 left-0 w-full h-full">
+<div class="absolute top-0 left-0 w-32 h-32 bg-blue-500 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
+<div class="absolute bottom-0 right-0 w-32 h-32 bg-primary rounded-full filter blur-3xl opacity-20 animate-pulse delay-700"></div>
+</div>
+<div class="relative">
+<div class="flex items-center justify-center mb-6">
+<div class="w-16 h-16 rounded-full bg-blue-800 flex items-center justify-center mr-4 animate-bounce">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-gift-line text-2xl"></i>
+</div>
+</div>
+</div>
+<h3 class="text-2xl font-bold text-center mb-4">Z okazji startu LiteCode</h3>
+<div class="text-center">
+<p class="text-xl mb-2">Wykorzystaj kod: <span class="font-bold text-blue-400 text-2xl">LITE40</span></p>
+<p class="text-lg text-blue-200">Otrzymaj -40% zniżki na pierwsze zamówienie!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Admin Panel Modal -->
+<div id="admin-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+<div class="bg-gray-900 rounded-xl p-6 max-w-md w-full border border-gray-700">
+<h2 class="text-xl font-semibold mb-6">Panel administratora</h2>
+<form id="admin-login-form">
+<div class="mb-4">
+<label for="admin-login" class="block text-sm font-medium text-gray-400 mb-2">Login</label>
+<input type="text" id="admin-login" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-button text-white" required>
+</div>
+<div class="mb-6">
+<label for="admin-key" class="block text-sm font-medium text-gray-400 mb-2">Klucz dostępu</label>
+<input type="password" id="admin-key" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-button text-white" required>
+</div>
+<div class="flex justify-end space-x-3">
+<button type="button" id="close-admin-modal" class="px-4 py-2 border border-gray-600 rounded-button text-gray-300 hover:bg-gray-800 whitespace-nowrap">Anuluj</button>
+<button type="submit" class="px-4 py-2 bg-primary rounded-button text-white whitespace-nowrap">Zaloguj się</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Cookie Consent -->
+<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-gray-900 p-4 border-t border-gray-800 z-40">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between">
+<div class="mb-4 sm:mb-0">
+<p class="text-sm text-gray-300">Ta strona używa plików cookie, aby zapewnić najlepsze doświadczenia. Korzystając z naszej strony wyrażasz zgodę na używanie plików cookie zgodnie z naszą <a href="#" class="text-blue-400 hover:underline">polityką prywatności</a>.</p>
+</div>
+<button id="accept-cookies" class="px-6 py-2 bg-primary rounded-button text-white whitespace-nowrap">Akceptuj</button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full py-6 px-6 border-t border-gray-800 text-center text-sm text-gray-400">
+<div class="max-w-7xl mx-auto">
+<p>© 2025 LiteCode. Wszelkie prawa zastrzeżone.</p>
+<div class="mt-2 flex justify-center space-x-4">
+<a href="#" class="hover:text-white">Polityka prywatności</a>
+<a href="#" class="hover:text-white">Regulamin</a>
+<a href="https://discord.gg/litecode" class="hover:text-white">Kontakt</a>
+</div>
+</div>
+</footer>
+<script id="stars-script">
+window.addEventListener('load', function() {
+const body = document.body;
+const loadingOverlay = document.getElementById('loading-overlay');
+setTimeout(() => {
+body.style.opacity = '1';
+body.style.transition = 'opacity 0.5s ease-in-out';
+loadingOverlay.style.opacity = '0';
+loadingOverlay.style.transition = 'opacity 0.5s ease-in-out';
+setTimeout(() => {
+loadingOverlay.style.display = 'none';
+}, 500);
+}, 1000);
+const starsContainer = document.getElementById('stars-container');
+const starsCount = 100;
+for (let i = 0; i < starsCount; i++) {
+const star = document.createElement('div');
+star.classList.add('star');
+// Random position
+const x = Math.random() * 100;
+const y = Math.random() * 100;
+// Random size
+const size = Math.random() * 2 + 1;
+// Random delay for animation
+const delay = Math.random() * 4;
+star.style.left = `${x}%`;
+star.style.top = `${y}%`;
+star.style.width = `${size}px`;
+star.style.height = `${size}px`;
+star.style.animationDelay = `${delay}s`;
+starsContainer.appendChild(star);
+}
+});
+</script>
+<script id="user-data-script">
+document.addEventListener('DOMContentLoaded', function() {
+// Simulate user data from Discord authentication
+const userData = {
+name: "Marcin Kowalski",
+id: "4567890123456789",
+avatar: "https://readdy.ai/api/search-image?query=professional%20profile%20picture%20of%20a%20polish%20man%20with%20dark%20hair%20and%20beard%2C%20high%20quality%2C%20realistic&width=200&height=200&seq=1&orientation=squarish"
+};
+// Update user information
+document.getElementById('user-name').textContent = userData.name;
+document.getElementById('discord-id').textContent = `Discord ID: ${userData.id}`;
+document.getElementById('logged-user-name').textContent = userData.name;
+// Set avatar
+const avatarImg = document.getElementById('user-avatar');
+avatarImg.src = userData.avatar;
+// Handle avatar loading error
+avatarImg.onerror = function() {
+// Use first letter of name as fallback
+this.style.display = 'none';
+const parent = this.parentElement;
+const initial = document.createElement('div');
+initial.textContent = userData.name.charAt(0).toUpperCase();
+initial.className = 'w-full h-full flex items-center justify-center text-xl font-bold bg-blue-600';
+parent.appendChild(initial);
+};
+});
+</script>
+<script id="panel-navigation-script">
+document.addEventListener('DOMContentLoaded', function() {
+const panels = document.querySelectorAll('.panel');
+const navButtons = document.querySelectorAll('[data-panel]');
+// Show default panel (orders)
+document.getElementById('orders-panel').classList.remove('hidden');
+// Handle panel navigation
+navButtons.forEach(button => {
+button.addEventListener('click', function() {
+const targetPanel = this.getAttribute('data-panel');
+// Hide all panels
+panels.forEach(panel => {
+panel.classList.add('hidden');
+});
+// Show target panel
+document.getElementById(`${targetPanel}-panel`).classList.remove('hidden');
+// Handle promotions separately
+if (targetPanel === 'promotions') {
+document.getElementById('promotions-modal').classList.remove('hidden');
+}
+});
+});
+});
+</script>
+<script id="modals-script">
+document.addEventListener('DOMContentLoaded', function() {
+// Promotions Modal
+const promotionsModal = document.getElementById('promotions-modal');
+const closePromotions = document.getElementById('close-promotions');
+closePromotions.addEventListener('click', function() {
+promotionsModal.classList.add('hidden');
+});
+// Admin Panel Modal
+const adminModal = document.getElementById('admin-modal');
+const adminPanelBtn = document.getElementById('admin-panel-btn');
+const closeAdminModal = document.getElementById('close-admin-modal');
+const adminLoginForm = document.getElementById('admin-login-form');
+let isAdminLoggedIn = false;
+adminPanelBtn.addEventListener('click', function() {
+adminModal.classList.remove('hidden');
+if (isAdminLoggedIn) {
+showAdminDashboard();
+} else {
+showAdminLogin();
+}
+});
+closeAdminModal.addEventListener('click', function() {
+adminModal.classList.add('hidden');
+});
+function showAdminLogin() {
+const adminCredentials = {
+'zxq0': 'A7X9B2QW1L',
+'dyzio': 'K3MZ8TR5YC',
+'kubus': 'N9LD6V2PXE'
+};
+adminModal.innerHTML = `
+<div class="bg-gray-900 rounded-xl p-6 max-w-md w-full border border-gray-700">
+<h2 class="text-xl font-semibold mb-6">Panel administratora</h2>
+<form id="admin-login-form">
+<div class="mb-4">
+<label for="admin-login" class="block text-sm font-medium text-gray-400 mb-2">Login</label>
+<input type="text" id="admin-login" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-button text-white" required>
+</div>
+<div class="mb-6">
+<label for="admin-key" class="block text-sm font-medium text-gray-400 mb-2">Klucz dostępu</label>
+<input type="password" id="admin-key" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-button text-white" required>
+</div>
+<div class="flex justify-end space-x-3">
+<button type="button" id="close-admin-modal" class="px-4 py-2 border border-gray-600 rounded-button text-gray-300 hover:bg-gray-800 whitespace-nowrap">Anuluj</button>
+<button type="submit" class="px-4 py-2 bg-primary rounded-button text-white whitespace-nowrap">Zaloguj się</button>
+</div>
+</form>
+</div>
+`;
+document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+e.preventDefault();
+const login = document.getElementById('admin-login').value;
+const key = document.getElementById('admin-key').value;
+if (adminCredentials[login] && adminCredentials[login] === key) {
+isAdminLoggedIn = true;
+showAdminDashboard();
+} else {
+const notification = document.createElement('div');
+notification.className = 'fixed bottom-4 right-4 bg-red-900 text-red-100 px-6 py-3 rounded-lg shadow-lg';
+notification.textContent = 'Niepoprawne dane logowania';
+document.body.appendChild(notification);
+setTimeout(() => notification.remove(), 3000);
+}
+});
+document.getElementById('close-admin-modal').addEventListener('click', function() {
+adminModal.classList.add('hidden');
+});
+}
+function showAdminDashboard() {
+adminModal.innerHTML = `
+<div class="bg-gray-900 rounded-xl p-6 max-w-2xl w-full border border-gray-700">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-xl font-semibold">Panel administratora</h2>
+<button id="close-admin-modal" class="text-gray-400 hover:text-white">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+</div>
+<div class="space-y-6">
+<div class="bg-gray-800 rounded-lg p-4">
+<h3 class="text-lg font-medium mb-4">Dodaj licencję</h3>
+<form id="add-license-form" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">Discord ID użytkownika</label>
+<input type="text" name="userId" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-button text-white" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">Typ licencji</label>
+<select name="licenseType" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-button text-white pr-8" required>
+<option value="bot-premium">Discord Bot Premium</option>
+<option value="admin-interface">Interfejs Administratora</option>
+<option value="security-system">System Zabezpieczeń</option>
+</select>
+</div>
+<button type="submit" class="px-4 py-2 bg-primary rounded-button text-white whitespace-nowrap">Dodaj licencję</button>
+</form>
+</div>
+<div class="bg-gray-800 rounded-lg p-4">
+<h3 class="text-lg font-medium mb-4">Dodaj zamówienie</h3>
+<form id="add-order-form" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">Discord ID użytkownika</label>
+<input type="text" name="userId" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-button text-white" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">Produkt</label>
+<select name="product" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-button text-white pr-8" required>
+<option value="bot-premium">Discord Bot Premium</option>
+<option value="admin-interface">Interfejs Administratora</option>
+<option value="security-system">System Zabezpieczeń</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">Status</label>
+<select name="status" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-button text-white pr-8" required>
+<option value="completed">Zrealizowane</option>
+<option value="pending">W trakcie</option>
+</select>
+</div>
+<button type="submit" class="px-4 py-2 bg-primary rounded-button text-white whitespace-nowrap">Dodaj zamówienie</button>
+</form>
+</div>
+</div>
+</div>
+`;
+document.getElementById('close-admin-modal').addEventListener('click', function() {
+adminModal.classList.add('hidden');
+});
+document.getElementById('add-license-form').addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(e.target);
+const licenseData = {
+userId: formData.get('userId'),
+type: formData.get('licenseType')
+};
 
-                <div class="mb-8">
-                    <div class="text-xs uppercase text-gray-500 font-semibold mb-4">Opcje podstawowe</div>
-                    <ul class="space-y-2">
-                        <li>
-                            <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
-                                <div class="w-5 h-5 flex items-center justify-center mr-3">
-                                    <i class="ri-home-line text-gray-400"></i>
-                                </div>
-                                <span>Moje licencje</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
-                                <div class="w-5 h-5 flex items-center justify-center mr-3">
-                                    <i class="ri-box-line text-gray-400"></i>
-                                </div>
-                                <span>Moje paczki</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
-                                <div class="w-5 h-5 flex items-center justify-center mr-3">
-                                    <i class="ri-ticket-line text-gray-400"></i>
-                                </div>
-                                <span>Moje tickety</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+const licensesList = document.getElementById('licenses-list');
+const emptyState = licensesList.querySelector('.flex.flex-col');
+if (emptyState) {
+emptyState.remove();
+}
 
-                <div>
-                    <div class="text-xs uppercase text-gray-500 font-semibold mb-4">Nasz sklep</div>
-                    <ul class="space-y-2">
-                        <li>
-                            <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
-                                <div class="w-5 h-5 flex items-center justify-center mr-3">
-                                    <i class="ri-shopping-cart-line text-gray-400"></i>
-                                </div>
-                                <span>Złóż zamówienie</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+const licenseCard = document.createElement('div');
+licenseCard.className = 'bg-gray-800 rounded-lg p-4 border border-gray-700';
+licenseCard.innerHTML = `
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center">
+<i class="ri-key-2-line text-xl"></i>
+</div>
+<div>
+<h3 class="font-medium">${licenseData.type.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h3>
+<p class="text-sm text-gray-400">ID: ${licenseData.userId}</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-green-900 text-green-100 rounded-full text-sm">Aktywna</span>
+</div>
+`;
 
-        <!-- Main Content -->
-        <div class="flex-1 ml-64">
-            <!-- Header -->
-            <header class="h-16 flex items-center justify-end px-8 border-b border-gray-800">
-                <a href="#" id="logout-btn" class="bg-primary text-white px-4 py-2 rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors">
-                    Wyloguj się
-                </a>
-            </header>
+licensesList.insertBefore(licenseCard, licensesList.firstChild);
 
-            <!-- Main Content Area -->
-            <main class="p-8">
-                <div class="max-w-5xl mx-auto">
-                    <div class="text-center mb-12">
-                        <h1 class="text-3xl font-bold text-white mb-2">PANEL LICENCJI</h1>
-                        <p class="text-gray-400">Zalogowano użytkownika: <span class="text-primary">zxq0</span></p>
-                    </div>
-                    <div class="main-content rounded-xl p-8 mb-8">
-                        <div class="text-center mb-6">
-                            <h2 class="text-xl font-bold text-white mb-1">ZAKUPIONE PRODUKTY</h2>
-                            <p class="text-primary">INFORMACJE O AKTYWNYCH USŁUGACH</p>
-                        </div>
+const notification = document.createElement('div');
+notification.className = 'fixed bottom-4 right-4 bg-green-900 text-green-100 px-6 py-3 rounded-lg shadow-lg';
+notification.textContent = 'Licencja została dodana pomyślnie';
+document.body.appendChild(notification);
+setTimeout(() => notification.remove(), 3000);
+});
+document.getElementById('add-order-form').addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(e.target);
+const orderData = {
+userId: formData.get('userId'),
+product: formData.get('product'),
+status: formData.get('status')
+};
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                            <div>
-                                <input type="text" placeholder="Wyszukaj po nazwie pluginu" class="w-full px-4 py-3 rounded-lg text-sm">
-                            </div>
-                            <div>
-                                <input type="text" placeholder="Wyszukaj po kluczu" class="w-full px-4 py-3 rounded-lg text-sm">
-                            </div>
-                        </div>
+const ordersList = document.getElementById('orders-list');
+const emptyState = ordersList.querySelector('.flex.flex-col');
+if (emptyState) {
+emptyState.remove();
+}
 
-                        <div class="text-center text-sm text-gray-400 mb-8">
-                            Brak licencji spełniających kryteria wyszukiwania.
-                        </div>
+const orderCard = document.createElement('div');
+orderCard.className = 'bg-gray-800 rounded-lg p-4 border border-gray-700';
+orderCard.innerHTML = `
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center">
+<i class="ri-shopping-bag-line text-xl"></i>
+</div>
+<div>
+<h3 class="font-medium">${orderData.product.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h3>
+<p class="text-sm text-gray-400">ID: ${orderData.userId}</p>
+</div>
+</div>
+<span class="px-3 py-1 ${orderData.status === 'completed' ? 'bg-green-900 text-green-100' : 'bg-yellow-900 text-yellow-100'} rounded-full text-sm">
+${orderData.status === 'completed' ? 'Zrealizowane' : 'W trakcie'}
+</span>
+</div>
+`;
 
-                        <div class="text-center">
-                            <p class="text-gray-400 text-sm">Nie widzisz produktu który zamówiłeś? <a href="#" class="text-primary hover:underline">Zgłoś to tutaj!</a></p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
+ordersList.insertBefore(orderCard, ordersList.firstChild);
 
-    <!-- Cookie Banner -->
-    <div class="cookie-banner fixed bottom-0 left-0 right-0 p-4 flex justify-between items-center">
-        <p class="text-sm text-gray-300">Ta strona wykorzystuje pliki cookies, korzystając z niej akceptujesz <a href="#" class="text-primary hover:underline">politykę prywatności</a>.</p>
-        <button id="accept-cookies" class="bg-primary text-white px-4 py-2 rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors">AKCEPTUJĘ</button>
-    </div>
-
-    <script id="discord-auth">
-        document.addEventListener('DOMContentLoaded', function() {
-            // Funkcja do pobierania parametrów z URL
-            function getUrlParameter(name) {
-                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-                var results = regex.exec(location.search);
-                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-            }
-            
-            // Sprawdź czy mamy kod autoryzacyjny z Discord
-            const code = getUrlParameter('code');
-            
-            if (code) {
-                // Tutaj normalnie wykonałbyś zapytanie do serwera, który wymieni kod na token dostępu
-                // i pobierze dane użytkownika z Discord API
-                // Ponieważ jest to przykład front-endowy, symulujemy to zachowanie
-                
-                console.log("Otrzymano kod autoryzacyjny: " + code);
-                
-                // Symulacja danych użytkownika z Discord
-                const mockUserData = {
-                    id: "9714934488:5145:32",
-                    username: "zxq0",
-                    avatar: "https://cdn.discordapp.com/embed/avatars/0.png"
-                };
-                
-                // Aktualizacja UI z danymi użytkownika
-                document.getElementById('user-name').textContent = mockUserData.username;
-                document.getElementById('user-id').textContent = mockUserData.id;
-                document.getElementById('user-avatar').src = mockUserData.avatar;
-                
-                // Zapisanie danych w localStorage (w rzeczywistej aplikacji używałbyś tokenów)
-                localStorage.setItem('discord_user', JSON.stringify(mockUserData));
-                
-                // Usunięcie parametru code z URL bez przeładowania strony
-                const url = new URL(window.location);
-                url.searchParams.delete('code');
-                window.history.pushState({}, '', url);
-            } else {
-                // Sprawdź czy użytkownik jest już zalogowany (w localStorage)
-                const savedUser = localStorage.getItem('discord_user');
-                
-                if (!savedUser) {
-                    // Przekieruj do logowania Discord
-                    window.location.href = "https://discord.com/oauth2/authorize?client_id=1375904230895783986&response_type=code&redirect_uri=https%3A%2F%2Fzxq041.github.io%2Fpanel%2F&scope=identify+guilds";
-                } else {
-                    // Aktualizacja UI z zapisanymi danymi
-                    const userData = JSON.parse(savedUser);
-                    document.getElementById('user-name').textContent = userData.username;
-                    document.getElementById('user-id').textContent = userData.id;
-                    document.getElementById('user-avatar').src = userData.avatar;
-                }
-            }
-        });
-    </script>
-    <script id="ui-interactions">
-        document.addEventListener('DOMContentLoaded', function() {
-            // Obsługa wylogowania
-            document.getElementById('logout-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                // Usunięcie danych użytkownika
-                localStorage.removeItem('discord_user');
-                // Przekierowanie na stronę główną
-                window.location.href = 'https://zxq041.github.io/';
-            });
-            
-            // Obsługa banera cookie
-            document.getElementById('accept-cookies').addEventListener('click', function() {
-                document.querySelector('.cookie-banner').style.display = 'none';
-                localStorage.setItem('cookies_accepted', 'true');
-            });
-            
-            // Sprawdź czy użytkownik zaakceptował już cookies
-            if (localStorage.getItem('cookies_accepted') === 'true') {
-                document.querySelector('.cookie-banner').style.display = 'none';
-            }
-        });
-    </script>
+const notification = document.createElement('div');
+notification.className = 'fixed bottom-4 right-4 bg-green-900 text-green-100 px-6 py-3 rounded-lg shadow-lg';
+notification.textContent = 'Zamówienie zostało dodane pomyślnie';
+document.body.appendChild(notification);
+setTimeout(() => notification.remove(), 3000);
+});
+}
+// Close modals when clicking outside
+window.addEventListener('click', function(e) {
+if (e.target === promotionsModal) {
+promotionsModal.classList.add('hidden');
+}
+if (e.target === adminModal && !isAdminLoggedIn) {
+adminModal.classList.add('hidden');
+}
+});
+});
+</script>
+<script id="cookie-consent-script">
+document.addEventListener('DOMContentLoaded', function() {
+const cookieConsent = document.getElementById('cookie-consent');
+const acceptCookies = document.getElementById('accept-cookies');
+// Check if user already accepted cookies
+const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+if (cookiesAccepted) {
+cookieConsent.classList.add('hidden');
+}
+acceptCookies.addEventListener('click', function() {
+localStorage.setItem('cookiesAccepted', 'true');
+cookieConsent.classList.add('hidden');
+});
+});
+</script>
 </body>
 </html>
