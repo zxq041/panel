@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Klienta - LiteBot's</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d300ff;
+            --background-color: #100018;
+            --text-color: #f0f0f0;
+            --card-bg-color: rgba(22, 5, 29, 0.7);
+            --glow-color: rgba(211, 0, 255, 0.5);
+            --border-color: rgba(211, 0, 255, 0.2);
+            --sidebar-bg: #16031d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .sidebar, .main-content {
+            position: relative;
+            z-index: 2;
+        }
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+            margin-bottom: 50px;
+        }
+        .sidebar-logo img { height: 40px; }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .sidebar-nav li a.active, .sidebar-nav li a:hover {
+            background: var(--primary-color);
+            color: #fff;
+            transform: translateX(5px);
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+        .sidebar-nav .icon {
+            font-size: 1.2rem;
+        }
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .top-bar {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(16, 0, 24, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+        }
+        .user-details span {
+            display: block;
+            line-height: 1.3;
+        }
+        .user-details .discord-id {
+            font-size: 0.8rem;
+            color: rgba(240, 240, 240, 0.7);
+        }
+        .logout-btn {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 20px;
+        }
+        .logout-btn:hover {
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+        .content-area {
+            padding: 40px;
+            overflow-y: auto;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .content-box {
+            background: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .content-box .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--border-color);
+        }
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        .order-card {
+            background: rgba(16, 0, 24, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .order-card h3 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <aside class="sidebar">
+        <a href="index.html" class="sidebar-logo">
+            <img src="https://i.imgur.com/wUiEF6u.png" alt="LiteBot's Logo">
+            <span>LiteBot's</span>
+        </a>
+        <ul class="sidebar-nav">
+            <li><a href="#" class="active"><span class="icon">📦</span> Twoje zamówienia</a></li>
+            <li><a href="https://discord.gg/EdbgdFtw" target="_blank"><span class="icon">💬</span> Wsparcie</a></li>
+            </ul>
+    </aside>
+
+    <div class="main-content">
+        <header class="top-bar">
+            <div class="user-info" id="user-info-container">
+                <button class="logout-btn" id="logout-button">WYLOGUJ</button>
+            </div>
+        </header>
+        <main class="content-area">
+            <h1>Panel Klienta</h1>
+            <p id="welcome-message">Jesteś zalogowany jako...</p>
+            
+            <div class="content-box">
+                <h2>Lista zrealizowanych zamówień</h2>
+                <div id="orders-list">
+                    <div id="no-orders-message">
+                        <div class="icon">🔒</div>
+                        <p>Nie masz jeszcze żadnych zamówień</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const userData = {
+                id: params.get('id'),
+                username: params.get('username'),
+                avatar: params.get('avatar'),
+                roles: params.get('roles') ? params.get('roles').split(',') : []
+            };
+
+            const roleToProductMap = {
+                '1387401924097216743': { 
+                    name: 'Strona Internetowa', 
+                    description: 'Kompleksowa, spersonalizowana strona internetowa z panelem administracyjnym.' 
+                },
+                '1186714192534573176': {
+                    name: 'Bot Discord Premium',
+                    description: 'Zaawansowany bot na zamówienie z unikalnymi funkcjami i panelem web.'
+                }
+                // Dodaj więcej mapowań tutaj:
+                // 'ID_TWOJEJ_KOLEJNEJ_ROLI': { name: 'Nazwa Produktu', description: 'Opis tego produktu.' }
+            };
+
+            const userInfoContainer = document.getElementById('user-info-container');
+            const welcomeMessage = document.getElementById('welcome-message');
+            const ordersList = document.getElementById('orders-list');
+            const noOrdersMessage = document.getElementById('no-orders-message');
+            const logoutButton = document.getElementById('logout-button');
+
+            if (userData.id && userData.username) {
+                // Wyświetl informacje o użytkowniku w prawym górnym rogu
+                const avatarUrl = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+                const userHtml = `
+                    <img src="${avatarUrl}" alt="Avatar" class="user-avatar">
+                    <div class="user-details">
+                        <span><strong>${userData.username}</strong></span>
+                        <span class="discord-id">Discord ID: ${userData.id}</span>
+                    </div>
+                `;
+                userInfoContainer.insertAdjacentHTML('afterbegin', userHtml);
+                
+                // Wyświetl powitanie
+                welcomeMessage.textContent = `Jesteś zalogowany jako: ${userData.username}`;
+
+                // Wyświetl zamówienia na podstawie ról
+                let hasOrders = false;
+                ordersList.innerHTML = ''; // Wyczyść domyślny kontener
+                userData.roles.forEach(roleId => {
+                    if (roleToProductMap[roleId]) {
+                        hasOrders = true;
+                        const product = roleToProductMap[roleId];
+                        const orderHtml = `
+                            <div class="order-card">
+                                <h3>${product.name}</h3>
+                                <p>${product.description}</p>
+                            </div>
+                        `;
+                        ordersList.insertAdjacentHTML('beforeend', orderHtml);
+                    }
+                });
+
+                if (!hasOrders) {
+                    ordersList.appendChild(noOrdersMessage); // Jeśli nie ma zamówień, pokaż starą wiadomość
+                }
+
+            } else {
+                // Jeśli brak danych, przekieruj na stronę główną
+                window.location.href = '';
+            }
+
+            // Obsługa wylogowania
+            logoutButton.addEventListener('click', () => {
+                // W prawdziwej aplikacji tutaj czyściłbyś sesję/token
+                // W naszym przypadku po prostu wracamy na stronę główną
+                window.location.href = 'index.html';
+            });
+
+            // Inicjalizacja particles.js
+            particlesJS('particles-js', {
+              "particles": { "number": { "value": 40, "density": { "enable": true, "value_area": 800 }}, "color": { "value": "#d300ff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.3, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.05, "sync": false }}, "size": { "value": 3, "random": true, "anim": { "enable": false }}, "line_linked": { "enable": false }, "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false}},
+              "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true}},
+              "retina_detect": true
+            });
+        });
+    </script>
+</body>
+</html>
