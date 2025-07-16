@@ -3,294 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Klienta - LiteBot's</title>
+    <title>Milkshake App</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --primary-color: #d300ff;
-            --background-color: #100018;
-            --text-color: #f0f0f0;
-            --card-bg-color: rgba(22, 5, 29, 0.7);
-            --glow-color: rgba(211, 0, 255, 0.5);
-            --border-color: rgba(211, 0, 255, 0.2);
-            --sidebar-bg: #16031d;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-        #particles-js {
-            position: fixed;
-            width: 100%;
+        body, html {
+            margin: 0;
+            padding: 0;
             height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #EAEAEA;
+            overflow: hidden;
         }
-        .sidebar, .main-content {
-            position: relative;
-            z-index: 2;
+
+        #app {
+            height: 100%;
         }
-        .sidebar {
-            width: 280px;
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 30px;
+
+        /* ----- Style dla strony logowania ----- */
+        .login-container {
             display: flex;
             flex-direction: column;
-            flex-shrink: 0;
-        }
-        .sidebar-logo {
-            display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-color);
-            text-decoration: none;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            padding-top: 15vh;
+        }
+        .logo-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
             margin-bottom: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
         }
-        .sidebar-logo img { height: 40px; }
-        .sidebar-nav { list-style: none; }
-        .sidebar-nav li a {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 20px;
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
+        .login-form-group {
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 30px;
         }
-        .sidebar-nav li a.active, .sidebar-nav li a:hover {
-            background: var(--primary-color);
-            color: #fff;
-            transform: translateX(5px);
-            box-shadow: 0 0 15px var(--glow-color);
+        .login-form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #A0A0A0;
+            font-size: 0.9rem;
+            text-align: left;
+            padding-left: 5px;
         }
-        .sidebar-nav .icon {
-            font-size: 1.2rem;
+        .login-form-input {
+            width: 100%;
+            border: 1px solid #555;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            padding: 16px;
+            font-size: 1rem;
+            color: #FFFFFF;
+            transition: all 0.2s ease-in-out;
+            box-sizing: border-box;
+            text-align: center;
         }
-        .main-content {
-            flex-grow: 1;
+        .login-form-input:focus {
+            outline: none;
+            border-color: #FFFFFF;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .login-button {
+            width: 80%;
+            max-width: 400px;
+            padding: 16px 0;
+            background: #FFFFFF;
+            color: #121212;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* ----- Style dla strony głównej (swipe) ----- */
+        .index-container {
             display: flex;
             flex-direction: column;
             height: 100vh;
-        }
-        .top-bar {
-            padding: 20px 40px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(16, 0, 24, 0.5);
-            backdrop-filter: blur(5px);
-        }
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: 2px solid var(--primary-color);
-        }
-        .user-details span {
-            display: block;
-            line-height: 1.3;
-        }
-        .user-details .discord-id {
-            font-size: 0.8rem;
-            color: rgba(240, 240, 240, 0.7);
-        }
-        .logout-btn {
-            background: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-left: 20px;
-        }
-        .logout-btn:hover {
-            background: var(--primary-color);
-            color: #fff;
-            box-shadow: 0 0 15px var(--glow-color);
-        }
-        .content-area {
-            padding: 40px;
-            overflow-y: auto;
-            flex-grow: 1;
-            text-align: center;
-        }
-        .content-box {
-            background: var(--card-bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 40px;
-            max-width: 800px;
-            margin: 20px auto;
-            text-align: center;
-        }
-        .content-box .icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--border-color);
-        }
-        h1 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-        .order-card {
-            background: rgba(16, 0, 24, 0.7);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
             padding: 20px;
-            margin-top: 20px;
-            text-align: left;
+            overflow: hidden;
         }
-        .order-card h3 {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
+        .index-content-area { flex-grow: 1; display: flex; justify-content: center; align-items: center; width: 100%; }
+        .index-footer { width: 100%; padding-top: 15px; flex-shrink: 0; }
+        .admin-gear { position: absolute; top: 15px; right: 15px; z-index: 100; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .gear-icon { font-size: 1.8rem; }
+        .card-container { position: relative; background-color: rgba(255, 255, 255, 0.05); backdrop-filter: blur(30px); width: 85vw; max-width: 350px; height: 70vh; max-height: 520px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.7); border: 1px solid rgba(255, 255, 255, 0.15); transition: transform 0.3s ease-out; overflow: hidden; }
+        .product-image { width: 150px; height: 150px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .product-name { font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 600; text-align: center; margin-bottom: 10px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .swipe-indicator { position: absolute; top: 30px; font-size: 2rem; font-weight: 700; padding: 5px 15px; border-radius: 15px; border: 3px solid; text-transform: uppercase; opacity: 0; transition: opacity 0.2s ease; }
+        .like { left: 20px; color: #FFFFFF; border-color: #FFFFFF; transform: rotate(-20deg); }
+        .nope { right: 20px; color: #777777; border-color: #777777; transform: rotate(20deg); }
+        .stock-input { background-color: rgba(0,0,0,0.2); border: 1px solid #555; color: #FFFFFF; padding: 10px; border-radius: 12px; width: 120px; text-align: center; font-size: 1.2rem; }
+        .summary-button { width: 100%; padding: 16px 0; background: #FFFFFF; color: #121212; font-weight: 600; font-size: 1.1rem; border: none; border-radius: 18px; box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2); cursor: pointer; }
+        .instructions, .no-products-container { color: #A0A0A0; text-align: center; margin-bottom: 15px; font-size: 0.8rem; }
+
+        /* ----- Style dla Podsumowania i Panelu Admina ----- */
+        .page-container { padding: 20px; }
+        .page-header { font-size: 2rem; font-weight: 600; margin-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .back-button { font-size: 1rem; cursor: pointer; background-color: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 12px; }
+        .list-item, .summary-box, .admin-section { background-color: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 18px; margin-bottom: 15px; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; }
+        .remove-btn { background-color: rgba(255, 255, 255, 0.1); color: #FFFFFF; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; }
+        .total-summary { text-align: right; }
+        .total-price { font-size: 1.8rem; font-weight: bold; color: #FFFFFF; }
+        .admin-section-title { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; }
+        .admin-form-group { display: flex; flex-direction: column; gap: 15px; }
+        .admin-input { background-color: rgba(0,0,0,0.2); border: 1px solid #555; color: #FFFFFF; padding: 12px 15px; border-radius: 12px; font-size: 1rem; }
+        .online-dot { width: 10px; height: 10px; background-color: #FFFFFF; border-radius: 50%; box-shadow: 0 0 8px rgba(255, 255, 255, 0.8); }
+        .user-status { display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
 
-    <aside class="sidebar">
-        <a href="index.html" class="sidebar-logo">
-            <img src="https://i.imgur.com/wUiEF6u.png" alt="LiteBot's Logo">
-            <span>LiteBot's</span>
-        </a>
-        <ul class="sidebar-nav">
-            <li><a href="#" class="active"><span class="icon">📦</span> Twoje zamówienia</a></li>
-            <li><a href="https://discord.gg/EdbgdFtw" target="_blank"><span class="icon">💬</span> Wsparcie</a></li>
-            </ul>
-    </aside>
+    <div id="app">
 
-    <div class="main-content">
-        <header class="top-bar">
-            <div class="user-info" id="user-info-container">
-                <button class="logout-btn" id="logout-button">WYLOGUJ</button>
+        <div v-if="currentPage === 'login'" class="login-container">
+            <img class="logo-image" src="https://i.imgur.com/dXRrPyB.jpeg" alt="Logo">
+            <div class="login-form-group">
+                <label class="login-form-label" for="loginInput">Login</label>
+                <input id="loginInput" class="login-form-input" type="text" v-model="loginInput" placeholder="Wpisz swój login...">
             </div>
-        </header>
-        <main class="content-area">
-            <h1>Panel Klienta</h1>
-            <p id="welcome-message">Jesteś zalogowany jako...</p>
-            
-            <div class="content-box">
-                <h2>Lista zrealizowanych zamówień</h2>
-                <div id="orders-list">
-                    <div id="no-orders-message">
-                        <div class="icon">🔒</div>
-                        <p>Nie masz jeszcze żadnych zamówień</p>
+            <button class="login-button" @click="handleLogin">Zaloguj się</button>
+        </div>
+
+        <div v-if="currentPage === 'index'" class="index-container">
+            <div class="admin-gear" v-if="isAdmin" @click="goToPage('admin')">
+                <span class="gear-icon">⚙️</span>
+            </div>
+            <div class="index-content-area">
+                <div v-if="!currentProduct" class="no-products-container">
+                    <p class="info-text">Wszystkie produkty zostały przejrzane!</p>
+                </div>
+                <div v-if="currentProduct" class="card-container" 
+                    @mousedown="onTouchStart" @mousemove="onTouchMove" @mouseup="onTouchEnd" @mouseleave="onTouchEnd"
+                    @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd"
+                    :style="{ transform: cardTransform, cursor: isDragging ? 'grabbing' : 'grab' }">
+                    <div class="swipe-indicator like" :style="{ opacity: likeOpacity }">DODAJ</div>
+                    <div class="swipe-indicator nope" :style="{ opacity: nopeOpacity }">POMIŃ</div>
+                    <img :src="currentProduct.imageUrl" class="product-image" alt="Zdjęcie produktu">
+                    <p class="product-name">{{ currentProduct.name }}</p>
+                    <p class="demand-info">Zapotrzebowanie: {{ currentProduct.demand }} {{ currentProduct.unit }}</p>
+                    <div>
+                        <label>Aktualny stan na magazynie:</label>
+                        <input type="number" class="stock-input" v-model.number="currentStock" placeholder="0">
                     </div>
                 </div>
             </div>
-        </main>
+            <div class="index-footer">
+                <div v-if="currentProduct" class="instructions">
+                    <p>Przesuwaj kartę w lewo lub w prawo</p>
+                </div>
+                <button class="summary-button" @click="goToPage('summary')">Podsumowanie</button>
+            </div>
+        </div>
+
+        <div v-if="currentPage === 'summary'" class="page-container">
+            <h1 class="page-header">
+                Podsumowanie Zamówienia
+                <span class="back-button" @click="goToPage('index')">Powrót</span>
+            </h1>
+            <div v-if="shoppingCart.length === 0">Koszyk jest pusty.</div>
+            <div v-else>
+                <div class="list-item" v-for="(item, index) in shoppingCart" :key="item.id">
+                    <div>
+                        <p style="font-size: 1.2rem; font-weight: 600; margin: 0;">{{ item.name }}</p>
+                        <p style="font-size: 0.9rem; color: #BDBDBD; margin: 5px 0 0 0;">
+                            Ilość: {{ item.quantity.toFixed(2) }} {{ item.unit }} | Cena: {{ item.price.toFixed(2) }} zł
+                        </p>
+                    </div>
+                    <div class="remove-btn" @click="removeItemFromCart(index)">✕</div>
+                </div>
+                <div class="summary-box total-summary">
+                    <span style="color: #BDBDBD;">Łączna cena:</span>
+                    <span class="total-price">{{ cartTotal.toFixed(2) }} zł</span>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="currentPage === 'admin'" class="page-container">
+            <h1 class="page-header">
+                Panel Administratora
+                <span class="back-button" @click="goToPage('index')">Powrót</span>
+            </h1>
+            <div class="admin-section">
+                <p class="admin-section-title">Dodaj nowego pracownika</p>
+                <div class="admin-form-group">
+                    <input class="admin-input" v-model="newUserName" placeholder="Imię (np. Natalia)">
+                    <input class="admin-input" v-model="newUserLogin" placeholder="Login (np. natalia33201)">
+                    <button class="summary-button" @click="addUser">Dodaj pracownika</button>
+                </div>
+            </div>
+            <div class="admin-section">
+                <p class="admin-section-title">Zalogowani użytkownicy</p>
+                <div class="user-status" v-if="currentUser">
+                    <span>{{ currentUser.name }}</span>
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span class="online-dot"></span> Online
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const userData = {
-                id: params.get('id'),
-                username: params.get('username'),
-                avatar: params.get('avatar'),
-                roles: params.get('roles') ? params.get('roles').split(',') : []
-            };
+        const { createApp } = Vue;
 
-            const roleToProductMap = {
-                '1387401924097216743': { 
-                    name: 'Strona Internetowa', 
-                    description: 'Kompleksowa, spersonalizowana strona internetowa z panelem administracyjnym.' 
+        createApp({
+            data() {
+                return {
+                    // --- Globalny stan aplikacji ---
+                    currentPage: 'login', // Strona startowa
+                    users: [
+                        { login: 'admin33201', name: 'Admin', permissions: 'admin' },
+                        { login: 'marcin33201', name: 'Marcin', permissions: 'admin' }
+                    ],
+                    products: [
+                        { id: 1, name: 'Mąka pszenna', demand: 10, unit: 'kg', pricePerUnit: 3.50, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' },
+                        { id: 2, name: 'Cukier biały', demand: 20, unit: 'kg', pricePerUnit: 5.00, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' },
+                        { id: 3, name: 'Truskawki', demand: 5, unit: 'kg', pricePerUnit: 15.00, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' },
+                        { id: 4, name: 'Mleko 3.2%', demand: 30, unit: 'l', pricePerUnit: 4.20, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' },
+                        { id: 5, name: 'Bita śmietana (spray)', demand: 15, unit: 'szt', pricePerUnit: 9.80, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' }
+                    ],
+                    shoppingCart: [],
+                    currentUser: null,
+
+                    // --- Stan dla poszczególnych "stron" ---
+                    loginInput: '',
+                    productIndex: 0,
+                    currentStock: null,
+                    touchStartX: 0,
+                    cardTransform: '',
+                    isDragging: false,
+                    likeOpacity: 0,
+                    nopeOpacity: 0,
+                    newUserName: '',
+                    newUserLogin: ''
+                }
+            },
+            computed: {
+                currentProduct() {
+                    return this.products[this.productIndex] || null;
                 },
-                '1186714192534573176': {
-                    name: 'Bot Discord Premium',
-                    description: 'Zaawansowany bot na zamówienie z unikalnymi funkcjami i panelem web.'
+                isAdmin() {
+                    return this.currentUser && this.currentUser.permissions === 'admin';
+                },
+                cartTotal() {
+                    return this.shoppingCart.reduce((sum, item) => sum + item.price, 0);
                 }
-                // Dodaj więcej mapowań tutaj:
-                // 'ID_TWOJEJ_KOLEJNEJ_ROLI': { name: 'Nazwa Produktu', description: 'Opis tego produktu.' }
-            };
+            },
+            methods: {
+                // --- Nawigacja ---
+                goToPage(page) {
+                    this.currentPage = page;
+                },
 
-            const userInfoContainer = document.getElementById('user-info-container');
-            const welcomeMessage = document.getElementById('welcome-message');
-            const ordersList = document.getElementById('orders-list');
-            const noOrdersMessage = document.getElementById('no-orders-message');
-            const logoutButton = document.getElementById('logout-button');
-
-            if (userData.id && userData.username) {
-                // Wyświetl informacje o użytkowniku w prawym górnym rogu
-                const avatarUrl = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
-                const userHtml = `
-                    <img src="${avatarUrl}" alt="Avatar" class="user-avatar">
-                    <div class="user-details">
-                        <span><strong>${userData.username}</strong></span>
-                        <span class="discord-id">Discord ID: ${userData.id}</span>
-                    </div>
-                `;
-                userInfoContainer.insertAdjacentHTML('afterbegin', userHtml);
-                
-                // Wyświetl powitanie
-                welcomeMessage.textContent = `Jesteś zalogowany jako: ${userData.username}`;
-
-                // Wyświetl zamówienia na podstawie ról
-                let hasOrders = false;
-                ordersList.innerHTML = ''; // Wyczyść domyślny kontener
-                userData.roles.forEach(roleId => {
-                    if (roleToProductMap[roleId]) {
-                        hasOrders = true;
-                        const product = roleToProductMap[roleId];
-                        const orderHtml = `
-                            <div class="order-card">
-                                <h3>${product.name}</h3>
-                                <p>${product.description}</p>
-                            </div>
-                        `;
-                        ordersList.insertAdjacentHTML('beforeend', orderHtml);
+                // --- Logika logowania ---
+                handleLogin() {
+                    const user = this.users.find(u => u.login === this.loginInput);
+                    if (user) {
+                        this.currentUser = user;
+                        alert(`Witaj, ${user.name}!`);
+                        this.goToPage('index');
+                    } else {
+                        alert('Błędny login!');
                     }
-                });
+                },
 
-                if (!hasOrders) {
-                    ordersList.appendChild(noOrdersMessage); // Jeśli nie ma zamówień, pokaż starą wiadomość
+                // --- Logika przesuwania (swipe) ---
+                onTouchStart(event) {
+                    this.isDragging = true;
+                    this.touchStartX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
+                },
+                onTouchMove(event) {
+                    if (!this.isDragging) return;
+                    const currentX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
+                    const deltaX = currentX - this.touchStartX;
+                    const rotation = deltaX / 20;
+                    this.cardTransform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
+                    const opacityThreshold = 80;
+                    this.nopeOpacity = Math.max(0, Math.min(1, deltaX / opacityThreshold));
+                    this.likeOpacity = Math.max(0, Math.min(1, -deltaX / opacityThreshold));
+                },
+                onTouchEnd(event) {
+                    if (!this.isDragging) return;
+                    this.isDragging = false;
+                    const finalX = event.type.includes('mouse') ? event.clientX : event.changedTouches[0].clientX;
+                    const deltaX = finalX - this.touchStartX;
+                    const threshold = 80;
+
+                    if (deltaX < -threshold) this.addProductToCart();
+                    else if (deltaX > threshold) this.skipProduct();
+                    else this.cardTransform = 'translateX(0px) rotate(0deg)';
+                    
+                    this.likeOpacity = 0;
+                    this.nopeOpacity = 0;
+                },
+
+                // --- Logika produktów i koszyka ---
+                addProductToCart() {
+                    const stock = this.currentStock || 0;
+                    const demand = this.currentProduct.demand;
+                    const amountToOrder = demand - stock;
+                    if (amountToOrder > 0) {
+                        this.shoppingCart.push({
+                            ...this.currentProduct,
+                            quantity: amountToOrder,
+                            price: this.currentProduct.pricePerUnit * amountToOrder
+                        });
+                    }
+                    this.nextProduct();
+                },
+                skipProduct() {
+                    this.nextProduct();
+                },
+                nextProduct() {
+                    this.productIndex++;
+                    this.currentStock = null;
+                    this.cardTransform = '';
+                },
+                removeItemFromCart(index) {
+                    this.shoppingCart.splice(index, 1);
+                },
+
+                // --- Logika panelu admina ---
+                addUser() {
+                    if (!this.newUserName || !this.newUserLogin) {
+                        alert('Wypełnij wszystkie pola!');
+                        return;
+                    }
+                    if (this.users.some(u => u.login === this.newUserLogin)) {
+                        alert('Ten login już istnieje!');
+                        return;
+                    }
+                    this.users.push({
+                        login: this.newUserLogin,
+                        name: this.newUserName,
+                        permissions: 'employee'
+                    });
+                    alert('Dodano pracownika!');
+                    this.newUserName = '';
+                    this.newUserLogin = '';
                 }
-
-            } else {
-                // Jeśli brak danych, przekieruj na stronę główną
-                window.location.href = '';
             }
-
-            // Obsługa wylogowania
-            logoutButton.addEventListener('click', () => {
-                // W prawdziwej aplikacji tutaj czyściłbyś sesję/token
-                // W naszym przypadku po prostu wracamy na stronę główną
-                window.location.href = 'index.html';
-            });
-
-            // Inicjalizacja particles.js
-            particlesJS('particles-js', {
-              "particles": { "number": { "value": 40, "density": { "enable": true, "value_area": 800 }}, "color": { "value": "#d300ff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.3, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.05, "sync": false }}, "size": { "value": 3, "random": true, "anim": { "enable": false }}, "line_linked": { "enable": false }, "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false}},
-              "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true}},
-              "retina_detect": true
-            });
-        });
+        }).mount('#app');
     </script>
+
 </body>
 </html>
