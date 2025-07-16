@@ -1,0 +1,154 @@
+{
+  "users": [
+    {
+      "login": "admin33201",
+      "name": "Admin",
+      "permissions": "admin"
+    },
+    {
+      "login": "marcin33201",
+      "name": "Marcin",
+      "permissions": "admin"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Mleko",
+      "demand": 10,
+      "unit": "l",
+      "pricePerUnit": 4.2,
+      "imageUrl": "https://i.imgur.com/dndBFSU.png"
+    },
+    {
+      "id": 2,
+      "name": "Cukier",
+      "demand": 8,
+      "unit": "kg",
+      "pricePerUnit": 5,
+      "imageUrl": "https://i.imgur.com/3I6tmK9.png"
+    },
+    {
+      "id": 3,
+      "name": "Mąka",
+      "demand": 20,
+      "unit": "kg",
+      "pricePerUnit": 3.5,
+      "imageUrl": "https://i.imgur.com/66TfZhh.png"
+    },
+    {
+      "id": 4,
+      "name": "Sól",
+      "demand": 10,
+      "unit": "kg",
+      "pricePerUnit": 2.5,
+      "imageUrl": "https://i.imgur.com/lG0enb1.png"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1752642943447,
+      "date": "2025-07-16T05:15:43.447Z",
+      "items": [
+        {
+          "id": 1,
+          "name": "Mleko",
+          "demand": 10,
+          "unit": "l",
+          "pricePerUnit": 4.2,
+          "imageUrl": "https://i.imgur.com/dndBFSU.png",
+          "quantity": 8,
+          "price": 33.6
+        },
+        {
+          "id": 2,
+          "name": "Cukier",
+          "demand": 8,
+          "unit": "kg",
+          "pricePerUnit": 5,
+          "imageUrl": "https://i.imgur.com/3I6tmK9.png",
+          "quantity": 4.5,
+          "price": 22.5
+        },
+        {
+          "id": 3,
+          "name": "Mąka",
+          "demand": 20,
+          "unit": "kg",
+          "pricePerUnit": 3.5,
+          "imageUrl": "https://i.imgur.com/66TfZhh.png",
+          "quantity": 8.5,
+          "price": 29.75
+        },
+        {
+          "id": 4,
+          "name": "Sól",
+          "demand": 10,
+          "unit": "kg",
+          "pricePerUnit": 2.5,
+          "imageUrl": "https://i.imgur.com/lG0enb1.png",
+          "quantity": 1,
+          "price": 2.5
+        }
+      ],
+      "totalPrice": 88.35,
+      "user": {
+        "login": "admin33201",
+        "name": "Admin",
+        "permissions": "admin"
+      }
+    },
+    {
+      "id": 1752657262653,
+      "date": "2025-07-16T09:14:22.653Z",
+      "items": [
+        {
+          "id": 1,
+          "name": "Mleko",
+          "demand": 10,
+          "unit": "l",
+          "pricePerUnit": 4.2,
+          "imageUrl": "https://i.imgur.com/dndBFSU.png",
+          "quantity": 7,
+          "price": 29.400000000000002
+        },
+        {
+          "id": 2,
+          "name": "Cukier",
+          "demand": 8,
+          "unit": "kg",
+          "pricePerUnit": 5,
+          "imageUrl": "https://i.imgur.com/3I6tmK9.png",
+          "quantity": 7,
+          "price": 35
+        },
+        {
+          "id": 3,
+          "name": "Mąka",
+          "demand": 20,
+          "unit": "kg",
+          "pricePerUnit": 3.5,
+          "imageUrl": "https://i.imgur.com/66TfZhh.png",
+          "quantity": 18,
+          "price": 63
+        },
+        {
+          "id": 4,
+          "name": "Sól",
+          "demand": 10,
+          "unit": "kg",
+          "pricePerUnit": 2.5,
+          "imageUrl": "https://i.imgur.com/lG0enb1.png",
+          "quantity": 7,
+          "price": 17.5
+        }
+      ],
+      "totalPrice": 144.9,
+      "user": {
+        "login": "admin33201",
+        "name": "Admin",
+        "permissions": "admin"
+      }
+    }
+  ]
+}
