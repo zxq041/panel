@@ -8,183 +8,52 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* NOWOŚĆ: Zmienne CSS dla łatwego zarządzania motywem */
-        :root {
-            --bg-color: #121212;
-            --card-bg-color: rgba(30, 30, 30, 0.7);
-            --glass-border-color: rgba(255, 255, 255, 0.1);
-            --text-primary: #F5F5F5;
-            --text-secondary: #A0A0A0;
-            --accent-color: #8A2BE2; /* Fioletowy akcent */
-            --accent-glow: rgba(138, 43, 226, 0.3);
-            --success-color: #2ECC71;
-            --danger-color: #E74C3C;
-        }
-
-        /* --- Style globalne --- */
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-        }
-        #app {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        * {
-            box-sizing: border-box;
-        }
-        button {
-            font-family: 'Poppins', sans-serif;
-        }
-        /* Definicja animacji */
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
-        @keyframes card-enter { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-        
-        /* --- Style wspólne dla przycisków i paneli --- */
-        .main-button { width: 100%; padding: 16px 0; background-color: var(--accent-color); color: var(--text-primary); font-weight: 600; font-size: 1.1rem; border: none; border-radius: 18px; box-shadow: 0 4px 20px var(--accent-glow); transition: all 0.2s ease-in-out; cursor: pointer; }
-        .main-button:hover { filter: brightness(1.1); }
-        .main-button:active { transform: scale(0.98); box-shadow: 0 2px 10px var(--accent-glow); }
-        .glass-panel { background-color: var(--card-bg-color); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border-color); border-radius: 20px; padding: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); }
-        .styled-input { width: 100%; border: 1px solid #555; background-color: rgba(255, 255, 255, 0.05); border-radius: 14px; padding: 15px; font-size: 1rem; color: var(--text-primary); transition: all 0.2s ease-in-out; text-align: center; }
-        .styled-input:focus { outline: none; border-color: var(--accent-color); background-color: rgba(138, 43, 226, 0.1); }
-
-        /* --- Style dla poszczególnych "stron" --- */
-        .page-container { padding: 20px; width: 100%; max-width: 600px; margin: 0 auto; }
-        .page-header { display: flex; justify-content: space-between; align-items: center; font-size: 2rem; font-weight: 600; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border-color); padding-bottom: 15px; }
-        .back-button, .admin-gear { display: flex; justify-content: center; align-items: center; cursor: pointer; background-color: var(--card-bg-color); border-radius: 50%; width: 44px; height: 44px; border: 1px solid var(--glass-border-color); transition: all 0.2s ease; }
-        .back-button:hover, .admin-gear:hover { background-color: rgba(255,255,255,0.1); }
-        .admin-gear { position: absolute; top: 20px; right: 20px; z-index: 100; }
-        .icon-svg { stroke: var(--text-primary); width: 24px; height: 24px; }
-        
-        /* Strona główna */
-        .index-container { display: flex; flex-direction: column; min-height: 100vh; padding: 20px; overflow: hidden; justify-content: space-between; }
-        .index-header { height: 50px; flex-shrink: 0; }
-        .index-content-area { flex-grow: 1; display: flex; justify-content: center; align-items: center; width: 100%; }
-        .index-footer { width: 100%; padding-top: 15px; flex-shrink: 0; }
-        .card-container { position: relative; width: 85vw; max-width: 350px; height: 70vh; max-height: 540px; text-align: center; animation: card-enter 0.5s ease-out; }
-        .card-inner { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: transform 0.3s ease-out; }
-        .is-floating .card-inner { animation: float 4s ease-in-out infinite; }
-        .product-image { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px; object-fit: cover; box-shadow: 0 4px 20px rgba(0,0,0,0.5); border: 2px solid var(--glass-border-color); }
-        .product-name { font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 600; margin: 10px 0; }
-        .swipe-indicator { position: absolute; top: 30px; font-size: 2rem; font-weight: 700; padding: 5px 15px; border-radius: 15px; border: 3px solid; text-transform: uppercase; opacity: 0; transition: opacity 0.2s ease; user-select: none; }
-        .like { left: 20px; color: var(--success-color); border-color: var(--success-color); transform: rotate(-20deg); }
-        .nope { right: 20px; color: var(--danger-color); border-color: var(--danger-color); transform: rotate(20deg); }
-        
-        /* Strona podsumowania i admina */
-        .list-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .remove-btn { width: 40px; height: 40px; border-radius: 50%; background-color: var(--card-bg-color); border: 1px solid var(--glass-border-color); cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s ease; }
-        .remove-btn .icon-svg { stroke: var(--text-secondary); }
-        .remove-btn:hover { background-color: var(--danger-color); border-color: var(--danger-color); }
-        .remove-btn:hover .icon-svg { stroke: white; }
-    </style>
+    <style>:root{--bg-color:#121212;--card-bg-color:rgba(30,30,30,0.7);--glass-border-color:rgba(255,255,255,0.1);--text-primary:#f5f5f5;--text-secondary:#a0a0a0;--accent-color:#8a2be2;--accent-glow:rgba(138,43,226,0.3);--success-color:#2ecc71;--danger-color:#e74c3c}body,html{margin:0;padding:0;font-family:Poppins,sans-serif;background-color:var(--bg-color);color:var(--text-primary)}#app{min-height:100vh;display:flex;flex-direction:column}*{box-sizing:border-box}button{font-family:Poppins,sans-serif}@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}@keyframes card-enter{0%{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}.main-button{width:100%;padding:16px 0;background-color:var(--accent-color);color:var(--text-primary);font-weight:600;font-size:1.1rem;border:none;border-radius:18px;box-shadow:0 4px 20px var(--accent-glow);transition:all .2s ease-in-out;cursor:pointer}.main-button:hover{filter:brightness(1.1)}.main-button:active{transform:scale(.98);box-shadow:0 2px 10px var(--accent-glow)}.glass-panel{background-color:var(--card-bg-color);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border:1px solid var(--glass-border-color);border-radius:20px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,.37)}.styled-input{width:100%;border:1px solid #555;background-color:rgba(255,255,255,.05);border-radius:14px;padding:15px;font-size:1rem;color:var(--text-primary);transition:all .2s ease-in-out;text-align:center}.styled-input:focus{outline:0;border-color:var(--accent-color);background-color:rgba(138,43,226,.1)}.page-container{padding:20px;width:100%;max-width:600px;margin:0 auto}.page-header{display:flex;justify-content:space-between;align-items:center;font-size:2rem;font-weight:600;margin-bottom:20px;border-bottom:1px solid var(--glass-border-color);padding-bottom:15px}.back-button,.admin-gear{display:flex;justify-content:center;align-items:center;cursor:pointer;background-color:var(--card-bg-color);border-radius:50%;width:44px;height:44px;border:1px solid var(--glass-border-color);transition:all .2s ease}.back-button:hover,.admin-gear:hover{background-color:rgba(255,255,255,.1)}.admin-gear{position:absolute;top:20px;right:20px;z-index:100}.icon-svg{stroke:var(--text-primary);width:24px;height:24px}.index-container{display:flex;flex-direction:column;min-height:100vh;padding:20px;overflow:hidden;justify-content:space-between}.index-header{height:50px;flex-shrink:0}.index-content-area{flex-grow:1;display:flex;justify-content:center;align-items:center;width:100%}.index-footer{width:100%;padding-top:15px;flex-shrink:0}.card-container{position:relative;width:85vw;max-width:350px;height:70vh;max-height:540px;text-align:center;animation:card-enter .5s ease-out}.card-inner{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;transition:transform .3s ease-out}.is-floating .card-inner{animation:float 4s ease-in-out infinite}.product-image{width:150px;height:150px;border-radius:50%;margin-bottom:20px;object-fit:cover;box-shadow:0 4px 20px rgba(0,0,0,.5);border:2px solid var(--glass-border-color)}.product-name{font-size:clamp(1.5rem,5vw,2.2rem);font-weight:600;margin:10px 0}.swipe-indicator{position:absolute;top:30px;font-size:2rem;font-weight:700;padding:5px 15px;border-radius:15px;border:3px solid;text-transform:uppercase;opacity:0;transition:opacity .2s ease;user-select:none}.like{left:20px;color:var(--success-color);border-color:var(--success-color);transform:rotate(-20deg)}.nope{right:20px;color:var(--danger-color);border-color:var(--danger-color);transform:rotate(20deg)}.list-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.remove-btn{width:40px;height:40px;border-radius:50%;background-color:var(--card-bg-color);border:1px solid var(--glass-border-color);cursor:pointer;display:flex;justify-content:center;align-items:center;transition:all .2s ease}.remove-btn .icon-svg{stroke:var(--text-secondary)}.remove-btn:hover{background-color:var(--danger-color);border-color:var(--danger-color)}.remove-btn:hover .icon-svg{stroke:#fff}.online-dot{width:10px;height:10px;background-color:#fff;border-radius:50%;box-shadow:0 0 8px #fff}.user-status{display:flex;justify-content:space-between;align-items:center}</style>
 </head>
 <body>
-
     <div id="app">
-
         <div v-if="currentPage === 'login'" class="index-container">
-            <div class="index-content-area">
-                <div style="text-align: center;">
-                    <img class="product-image" src="https://i.imgur.com/dXRrPyB.jpeg" alt="Logo">
-                    <div style="width: 80vw; max-width: 400px; margin: 30px auto;">
-                        <input id="loginInput" class="styled-input" type="text" v-model="loginInput" placeholder="Wpisz swój login...">
-                    </div>
-                    <button class="main-button" style="width: 80vw; max-width: 400px;" @click="handleLogin">Zaloguj się</button>
-                </div>
-            </div>
+            <div class="index-content-area"><div style="text-align:center"><img class="product-image" src="https://i.imgur.com/dXRrPyB.jpeg" alt="Logo"><div style="width:80vw;max-width:400px;margin:30px auto"><input id="loginInput" class="styled-input" type="text" v-model="loginInput" placeholder="Wpisz swój login..."></div><button class="main-button" style="width:80vw;max-width:400px" @click="handleLogin">Zaloguj się</button></div></div>
         </div>
 
         <div v-if="currentPage === 'index'" class="index-container">
-            <header class="index-header">
-                <div class="admin-gear" v-if="isAdmin" @click="goToPage('admin')">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.48.398.668 1.03.26 1.431l-1.296 2.247a1.125 1.125 0 0 1-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.37 6.37 0 0 1-.22.127c-.331.183-.581.495-.645.87l-.213 1.281c-.09.543-.56.94-1.11.94h-2.593c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.37 6.37 0 0 1-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 0 1-1.37-.49l-1.296-2.247a1.125 1.125 0 0 1 .26-1.431l1.003-.827c.293-.24.438-.613.438-.995s-.145-.755-.438-.995l-1.003-.827a1.125 1.125 0 0 1-.26-1.431l1.296-2.247a1.125 1.125 0 0 1 1.37-.49l1.217.456c.355.133.75.072 1.075-.124.073-.044.146-.087.22-.127.331-.183.581-.495.645-.87l.213-1.281ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
-                </div>
-            </header>
+            <header class="index-header"><div class="admin-gear" v-if="isAdmin" @click="goToPage('admin')"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.48.398.668 1.03.26 1.431l-1.296 2.247a1.125 1.125 0 0 1-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.37 6.37 0 0 1-.22.127c-.331.183-.581.495-.645.87l-.213 1.281c-.09.543-.56.94-1.11.94h-2.593c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.37 6.37 0 0 1-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 0 1-1.37-.49l-1.296-2.247a1.125 1.125 0 0 1 .26-1.431l1.003-.827c.293-.24.438-.613.438-.995s-.145-.755-.438-.995l-1.003-.827a1.125 1.125 0 0 1-.26-1.431l1.296-2.247a1.125 1.125 0 0 1 1.37-.49l1.217.456c.355.133.75.072 1.075-.124.073-.044.146-.087.22-.127.331-.183.581-.495.645-.87l.213-1.281ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg></div></header>
             <main class="index-content-area">
-                <div v-if="!currentProduct" class="no-products-container">
-                    <p>Wszystkie produkty zostały przejrzane!</p>
-                </div>
-                <div v-if="currentProduct" class="card-container" :key="cardKey">
-                    <div class="glass-panel card-inner" 
-                        @mousedown="onTouchStart" @mousemove="onTouchMove" @mouseup="onTouchEnd" @mouseleave="onTouchEnd"
-                        @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd"
-                        :class="{ 'is-floating': !isDragging }"
-                        :style="{ transform: cardTransform, cursor: isDragging ? 'grabbing' : 'grab' }">
-                        <div class="swipe-indicator like" :style="{ opacity: likeOpacity }">DODAJ</div>
-                        <div class="swipe-indicator nope" :style="{ opacity: nopeOpacity }">POMIŃ</div>
-                        <img :src="currentProduct.imageUrl" class="product-image" alt="Zdjęcie produktu">
-                        <h2 class="product-name">{{ currentProduct.name }}</h2>
-                        <p style="color: var(--text-secondary)">Zapotrzebowanie: {{ currentProduct.demand }} {{ currentProduct.unit }}</p>
-                        <div>
-                            <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px; display: block;">Aktualny stan:</label>
-                            <input type="number" class="styled-input" v-model.number="currentStock" placeholder="0">
-                        </div>
-                    </div>
-                </div>
+                <div v-if="!currentProduct" class="no-products-container"><p>Wszystkie produkty zostały przejrzane!</p></div>
+                <div v-if="currentProduct" class="card-container" :key="cardKey"><div class="glass-panel card-inner" @mousedown="onTouchStart" @mousemove="onTouchMove" @mouseup="onTouchEnd" @mouseleave="onTouchEnd" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd" :class="{ 'is-floating': !isDragging }" :style="{ transform: cardTransform, cursor: isDragging ? 'grabbing' : 'grab' }"><div class="swipe-indicator like" :style="{ opacity: likeOpacity }">DODAJ</div><div class="swipe-indicator nope" :style="{ opacity: nopeOpacity }">POMIŃ</div><img :src="currentProduct.imageUrl" class="product-image" alt="Zdjęcie produktu"><h2 class="product-name">{{ currentProduct.name }}</h2><p style="color:var(--text-secondary)">Zapotrzebowanie: {{ currentProduct.demand }} {{ currentProduct.unit }}</p><div><label style="color:var(--text-secondary);font-size:.9rem;margin-bottom:8px;display:block">Aktualny stan:</label><input type="number" class="styled-input" v-model.number="currentStock" placeholder="0"></div></div></div>
             </main>
             <footer class="index-footer">
-                <div v-if="currentProduct" class="instructions">
-                    <p>Przesuwaj kartę w lewo lub w prawo</p>
-                </div>
+                <div v-if="currentProduct" class="instructions"><p>Przesuwaj kartę w lewo lub w prawo</p></div>
                 <button class="main-button" @click="goToPage('summary')">Podsumowanie</button>
             </footer>
         </div>
 
         <div v-if="currentPage === 'summary'" class="page-container">
-            <h1 class="page-header">
-                <span>Podsumowanie</span>
-                <div class="back-button" @click="goToPage('index')">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
-                </div>
-            </h1>
+            <h1 class="page-header"><span>Podsumowanie</span><div class="back-button" @click="goToPage('index')"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg></div></h1>
             <div v-if="shoppingCart.length === 0">Koszyk jest pusty.</div>
             <div v-else>
                 <div class="list-item glass-panel" v-for="(item, index) in shoppingCart" :key="item.id">
-                    <div>
-                        <p style="font-size: 1.2rem; font-weight: 600; margin: 0;">{{ item.name }}</p>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 5px 0 0 0;">
-                            Ilość: {{ item.quantity.toFixed(2) }} {{ item.unit }} | Cena: {{ item.price.toFixed(2) }} zł
-                        </p>
-                    </div>
-                    <div class="remove-btn" @click="removeItemFromCart(index)">
-                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
-                    </div>
+                    <div><p style="font-size:1.2rem;font-weight:600;margin:0">{{ item.name }}</p><p style="font-size:.9rem;color:var(--text-secondary);margin:5px 0 0 0">Ilość: {{ item.quantity.toFixed(2) }} {{ item.unit }} | Cena: {{ item.price.toFixed(2) }} zł</p></div>
+                    <div class="remove-btn" @click="removeItemFromCart(index)"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg></div>
                 </div>
-                <div class="summary-box glass-panel" style="text-align: right;">
-                    <span style="color: var(--text-secondary);">Łączna cena:</span>
-                    <span class="total-price" style="margin-left: 10px;">{{ cartTotal.toFixed(2) }} zł</span>
-                </div>
+                <div class="summary-box glass-panel" style="text-align:right"><span style="color:var(--text-secondary)">Łączna cena:</span><span class="total-price" style="margin-left:10px">{{ cartTotal.toFixed(2) }} zł</span></div>
+                <button class="main-button" @click="saveOrder" style="margin-top: 20px;">Zapisz zamówienie w systemie</button>
             </div>
         </div>
 
         <div v-if="currentPage === 'admin'" class="page-container">
-            <h1 class="page-header">
-                <span>Panel Admina</span>
-                <div class="back-button" @click="goToPage('index')">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
-                </div>
-            </h1>
+            <h1 class="page-header"><span>Panel Admina</span><div class="back-button" @click="goToPage('index')"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg></div></h1>
             <div class="admin-section glass-panel">
-                <p class="admin-section-title">Dodaj nowego pracownika</p>
-                <div class="admin-form-group">
-                    <input class="styled-input" v-model="newUserName" placeholder="Imię (np. Natalia)">
-                    <input class="styled-input" v-model="newUserLogin" placeholder="Login (np. natalia33201)">
-                    <button class="main-button" @click="addUser">Dodaj pracownika</button>
-                </div>
+                <p style="font-size:1.4rem;font-weight:600;margin-bottom:20px">Dodaj pracownika</p>
+                <div style="display:flex;flex-direction:column;gap:15px"><input class="styled-input" v-model="newUserName" placeholder="Imię (np. Natalia)"><input class="styled-input" v-model="newUserLogin" placeholder="Login (np. natalia33201)"><button class="main-button" @click="addUser">Dodaj pracownika</button></div>
             </div>
             <div class="admin-section glass-panel">
-                <p class="admin-section-title">Zalogowani użytkownicy</p>
-                <div class="user-status" v-if="currentUser">
-                    <span>{{ currentUser.name }}</span>
-                    <span style="display: flex; align-items: center; gap: 8px;">
-                        <span class="online-dot"></span> Online
-                    </span>
+                <p style="font-size:1.4rem;font-weight:600;margin-bottom:20px">Zapisane Zamówienia</p>
+                <div v-if="savedOrders.length === 0">Brak zapisanych zamówień.</div>
+                <div class="list-item" v-for="order in savedOrders" :key="order.id" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+                    <p style="font-weight: 600;">Zamówienie #{{ order.id }} ({{ new Date(order.date).toLocaleString('pl-PL') }}) | <span style="color: var(--text-secondary);">Złożone przez: {{ order.user.name }}</span></p>
+                    <ul><li v-for="item in order.items">{{ item.name }} - {{ item.quantity.toFixed(2) }} {{ item.unit }}</li></ul>
+                    <p style="align-self: flex-end; font-weight: bold;">Suma: {{ order.totalPrice.toFixed(2) }} zł</p>
                 </div>
             </div>
         </div>
@@ -192,26 +61,15 @@
 
     <script>
         const { createApp } = Vue;
-
         createApp({
             data() {
                 return {
                     currentPage: 'login',
-                    users: [{ login: 'admin33201', name: 'Admin', permissions: 'admin' }, { login: 'marcin33201', name: 'Marcin', permissions: 'admin' }],
-                    products: [{ id: 1, name: 'Mąka pszenna', demand: 10, unit: 'kg', pricePerUnit: 3.50, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' }, { id: 2, name: 'Cukier biały', demand: 20, unit: 'kg', pricePerUnit: 5.00, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' }, { id: 3, name: 'Truskawki', demand: 5, unit: 'kg', pricePerUnit: 15.00, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' }, { id: 4, name: 'Mleko 3.2%', demand: 30, unit: 'l', pricePerUnit: 4.20, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' }, { id: 5, name: 'Bita śmietana', demand: 15, unit: 'szt', pricePerUnit: 9.80, imageUrl: 'https://i.imgur.com/L4FJ1WJ.png' }],
-                    shoppingCart: [],
-                    currentUser: null,
-                    loginInput: '',
-                    productIndex: 0,
-                    currentStock: null,
-                    touchStartX: 0,
-                    cardTransform: '',
-                    isDragging: false,
-                    likeOpacity: 0,
-                    nopeOpacity: 0,
-                    newUserName: '',
-                    newUserLogin: '',
-                    cardKey: 0, // Klucz do re-renderowania karty i animacji
+                    users: [], products: [], shoppingCart: [], savedOrders: [],
+                    currentUser: null, loginInput: '', productIndex: 0,
+                    currentStock: null, touchStartX: 0, cardTransform: '',
+                    isDragging: false, likeOpacity: 0, nopeOpacity: 0,
+                    newUserName: '', newUserLogin: '', cardKey: 0,
                 }
             },
             computed: {
@@ -220,69 +78,67 @@
                 cartTotal() { return this.shoppingCart.reduce((sum, item) => sum + item.price, 0); }
             },
             methods: {
-                goToPage(page) { this.currentPage = page; },
-                handleLogin() {
+                goToPage(page) {
+                    this.currentPage = page;
+                    // Jeśli wchodzimy do panelu admina, odśwież listę zamówień
+                    if (page === 'admin') {
+                        this.fetchOrders();
+                    }
+                },
+                async handleLogin() {
                     const user = this.users.find(u => u.login === this.loginInput);
                     if (user) { this.currentUser = user; this.goToPage('index'); } 
                     else { alert('Błędny login!'); }
                 },
-                onTouchStart(event) {
-                    this.isDragging = true;
-                    this.touchStartX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-                },
-                onTouchMove(event) {
-                    if (!this.isDragging) return;
-                    event.preventDefault(); // Zapobiega przewijaniu strony na telefonie
-                    const currentX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-                    const deltaX = currentX - this.touchStartX;
-                    const rotation = deltaX / 20;
-                    this.cardTransform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
-                    const opacityThreshold = 80;
-                    this.nopeOpacity = Math.max(0, Math.min(1, deltaX / opacityThreshold));
-                    this.likeOpacity = Math.max(0, Math.min(1, -deltaX / opacityThreshold));
-                },
-                onTouchEnd(event) {
-                    if (!this.isDragging) return;
-                    this.isDragging = false;
-                    const finalX = event.type.includes('mouse') ? event.clientX : event.changedTouches[0].clientX;
-                    const deltaX = finalX - this.touchStartX;
-                    const threshold = 100;
-
-                    if (deltaX < -threshold) this.addProductToCart();
-                    else if (deltaX > threshold) this.skipProduct();
-                    else this.cardTransform = 'translateX(0px) rotate(0deg)';
-                    
-                    this.likeOpacity = 0;
-                    this.nopeOpacity = 0;
-                },
-                addProductToCart() {
-                    const stock = this.currentStock || 0;
-                    if (this.currentProduct.demand - stock > 0) {
-                        this.shoppingCart.push({ ...this.currentProduct, quantity: this.currentProduct.demand - stock, price: this.currentProduct.pricePerUnit * (this.currentProduct.demand - stock) });
-                    }
-                    this.nextProduct();
-                },
+                onTouchStart(event) { /* ... bez zmian ... */ this.isDragging = true; this.touchStartX = event.type.includes('mouse')?event.clientX:event.touches[0].clientX; },
+                onTouchMove(event) { if(!this.isDragging)return;event.preventDefault();const t=event.type.includes("mouse")?event.clientX:event.touches[0].clientX,e=t-this.touchStartX,o=e/20;this.cardTransform=`translateX(${e}px) rotate(${o}deg)`;const a=80;this.nopeOpacity=Math.max(0,Math.min(1,e/a)),this.likeOpacity=Math.max(0,Math.min(1,-e/a))},
+                onTouchEnd(event) { if(!this.isDragging)return;this.isDragging=!1;const t=event.type.includes("mouse")?event.clientX:event.changedTouches[0].clientX,e=t-this.touchStartX,o=100;e<-o?this.addProductToCart():e>o?this.skipProduct():this.cardTransform="translateX(0px) rotate(0deg)",this.likeOpacity=0,this.nopeOpacity=0},
+                addProductToCart() { const stock = this.currentStock || 0; if (this.currentProduct.demand - stock > 0) { this.shoppingCart.push({ ...this.currentProduct, quantity: this.currentProduct.demand - stock, price: this.currentProduct.pricePerUnit * (this.currentProduct.demand - stock) }); } this.nextProduct(); },
                 skipProduct() { this.nextProduct(); },
-                nextProduct() {
-                    this.cardTransform = `translateX(${this.cardTransform.includes('-') ? '-' : ''}200vw) rotate(${this.cardTransform.includes('-') ? '-' : ''}60deg)`;
-                    setTimeout(() => {
-                        this.productIndex++;
-                        this.currentStock = null;
-                        this.cardTransform = '';
-                        this.cardKey++; // Zmienia klucz, aby karta re-renderowała się z animacją
-                    }, 300);
-                },
+                nextProduct() { this.cardTransform = `translateX(${this.cardTransform.includes('-') ? '-' : ''}200vw) rotate(${this.cardTransform.includes('-') ? '-' : ''}60deg)`; setTimeout(() => { this.productIndex++; this.currentStock = null; this.cardTransform = ''; this.cardKey++; }, 300); },
                 removeItemFromCart(index) { this.shoppingCart.splice(index, 1); },
-                addUser() {
+                async addUser() {
                     if (!this.newUserName || !this.newUserLogin) return alert('Wypełnij wszystkie pola!');
-                    if (this.users.some(u => u.login === this.newUserLogin)) return alert('Ten login już istnieje!');
-                    this.users.push({ login: this.newUserLogin, name: this.newUserName, permissions: 'employee' });
-                    alert('Dodano pracownika!');
-                    this.newUserName = ''; this.newUserLogin = '';
-                }
+                    const response = await fetch('/api/users', {
+                        method: 'POST', headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ login: this.newUserLogin, name: this.newUserName, permissions: 'employee' })
+                    });
+                    const result = await response.json();
+                    alert(result.message);
+                    if (response.ok) { this.newUserName = ''; this.newUserLogin = ''; this.fetchUsers(); }
+                },
+                // NOWA METODA: Zapis zamówienia
+                async saveOrder() {
+                    if (this.shoppingCart.length === 0) return alert("Koszyk jest pusty!");
+                    const orderData = {
+                        items: this.shoppingCart,
+                        totalPrice: this.cartTotal,
+                        user: this.currentUser
+                    };
+                    const response = await fetch('/api/orders', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(orderData)
+                    });
+                    const result = await response.json();
+                    alert(result.message);
+                    if (response.ok) {
+                        this.shoppingCart = []; // Wyczyść koszyk po zapisaniu
+                        this.goToPage('index'); // Wróć do strony głównej
+                    }
+                },
+                // NOWE METODY: Pobieranie danych z serwera
+                async fetchUsers() { this.users = await (await fetch('/api/users')).json(); },
+                async fetchProducts() { this.products = await (await fetch('/api/products')).json(); },
+                async fetchOrders() { this.savedOrders = await (await fetch('/api/orders')).json(); }
+            },
+            // mounted() jest wywoływane, gdy aplikacja Vue jest gotowa
+            async mounted() {
+                // Od razu po załadowaniu strony pobieramy dane z naszego "serwera"
+                await this.fetchUsers();
+                await this.fetchProducts();
             }
         }).mount('#app');
     </script>
-
 </body>
 </html>
